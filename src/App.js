@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import loadable from '@loadable/component';
+import { useDispatch } from 'react-redux';
 import { loadUser } from '@store/modules/authSlice';
 
 const Login = loadable(() => import('@pages/Login'));
@@ -11,6 +11,12 @@ const UserList = loadable(() => import('@pages/UserList'));
 const UserDetail = loadable(() => import('@pages/UserDetail'));
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
   return (
     <>
       <Routes>
