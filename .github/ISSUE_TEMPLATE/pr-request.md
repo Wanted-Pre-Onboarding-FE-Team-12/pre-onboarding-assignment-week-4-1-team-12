@@ -4,7 +4,6 @@ about: developed pr
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ## 🚅 PR 한 줄 요약
