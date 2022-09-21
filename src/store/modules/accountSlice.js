@@ -71,8 +71,8 @@ export const getUsers = createAsyncThunk('users/userList', async (_, { rejectWit
 
 const initialState = {
   accountList: [],
-  accountStatusList: [],
-  brokerList: [],
+  accountStatusList: {},
+  brokerList: {},
   brokerFormatList: [],
   userList: [],
 };
@@ -82,31 +82,31 @@ const accountsReducer = createReducer(initialState, builder => {
     const spliceData = action.payload.splice(0, 20);
     state.accountList.push(spliceData);
   });
-  builder.addCase(getAccounts.rejected, (state, action) => {
+  builder.addCase(getAccounts.rejected, state => {
     state.accountList = [];
   });
   builder.addCase(getBrokers.fulfilled, (state, action) => {
-    state.brokerList.push(action.payload);
+    state.brokerList = { ...action.payload };
   });
-  builder.addCase(getBrokers.rejected, (state, action) => {
+  builder.addCase(getBrokers.rejected, state => {
     state.brokerList = [];
   });
   builder.addCase(getAccountStatus.fulfilled, (state, action) => {
-    state.accountStatusList.push(action.payload);
+    state.accountStatusList = { ...action.payload };
   });
-  builder.addCase(getAccountStatus.rejected, (state, action) => {
+  builder.addCase(getAccountStatus.rejected, state => {
     state.accountStatusList = [];
   });
   builder.addCase(getBrokerFormat.fulfilled, (state, action) => {
     state.brokerFormatList.push(action.payload);
   });
-  builder.addCase(getBrokerFormat.rejected, (state, action) => {
+  builder.addCase(getBrokerFormat.rejected, state => {
     state.brokerFormatList = [];
   });
   builder.addCase(getUsers.fulfilled, (state, action) => {
-    state.userList.push(action.payload);
+    state.userList.push(...action.payload);
   });
-  builder.addCase(getUsers.rejected, (state, action) => {
+  builder.addCase(getUsers.rejected, state => {
     state.userList = [];
   });
   builder.addDefaultCase(state => state);
