@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAccountList, getBrokers, getUsers } from '@api/accountApi';
+import { getAccountList, getBrokers, getUsers, getAccountStatus } from '@api/accountApi';
 
 export const fetchAccountList = createAsyncThunk('account/fetchAccountList', async () => {
   try {
@@ -20,8 +20,17 @@ export const fetchBrockers = createAsyncThunk('account/fetchBrockers', async () 
   }
 });
 export const fetchUsers = createAsyncThunk('account/fetchUsers', async () => {
+  try {
+    const response = await getUsers();
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+});
+export const fetchAccountStatus = createAsyncThunk('account/fetchAccountStatus', async () => {
     try {
-      const response = await getUsers();
+      const response = await getAccountStatus();
       return response.data;
     } catch (error) {
       console.log(error);
@@ -31,7 +40,7 @@ export const fetchUsers = createAsyncThunk('account/fetchUsers', async () => {
 
 const accountSlice = createSlice({
   name: 'accountList',
-  initialState: { entities: [], brockers: [], users:[], loading: 'idle' },
+  initialState: { entities: [], brockers: [], users: [], accountStatus:[], loading: 'idle' },
   reducers: {
     //행동
     setAccountList(state, action) {},
@@ -51,7 +60,10 @@ const accountSlice = createSlice({
       state.brockers.push(action.payload);
     });
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users.push(action.payload);
+      state.users.push(action.payload);
+    });
+    builder.addCase(fetchAccountStatus.fulfilled, (state, action) => {
+        state.accountStatus.push(action.payload);
       });
   },
 });

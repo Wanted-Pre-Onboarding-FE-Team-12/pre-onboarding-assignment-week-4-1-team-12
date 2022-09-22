@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AccountItem = ({ account, brockers, users }) => {
+const AccountItem = ({ account, brockers, users, accountStatus }) => {
   const {
     //id, //그냥 아이디
     user_id,
@@ -27,15 +27,21 @@ const AccountItem = ({ account, brockers, users }) => {
     return date;
   }
   function setUserName(target_id) {
-    const result = users.find(user=>{return user.id === target_id})
-    return result.name
+    const result = users.find(user => {
+      return user.id === target_id;
+    });
+    return result.name;
+  }
+  function setAccountStatus(status){
+    const result = Object.entries(accountStatus).find(st=> st[1] === status)
+    return result[0]
   }
   return (
     <tr>
       <td>{setUserName(user_id)}</td>
       <td>{brockers[broker_id]}</td>
       <td>{accountNumberMasking(number)}</td>
-      <td>{status}</td>
+      <td>{setAccountStatus(status)}</td>
       <td>{name}</td>
       <td>{applyCommas(assets)}</td>
       <td>{applyCommas(payments)}</td>
