@@ -1,17 +1,19 @@
-import { fetchAccountList } from '@store/modules/accountSlice';
+import { fetchAccountList, fetchBrockers } from '@store/modules/accountSlice';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AccountItem from './AccountItem';
 
 const AccountsContainer = () => {
   const dispatch = useDispatch();
-  let accounts = useSelector(state => {
-    return state.account.entities[0];
+  let [accounts, brockers] = useSelector(state => {
+    console.log(state.account)
+    return [state.account.entities[0], state.account.brockers[0]]
   });
 
   useEffect(() => {
     dispatch(fetchAccountList());
-  });
+    dispatch(fetchBrockers());
+  },[]);
   return (
     <table>
       <tr>
@@ -25,7 +27,7 @@ const AccountsContainer = () => {
         <th>active</th>
         <th>created_at</th>
       </tr>
-      {accounts && accounts.slice(0, 20).map(account => <AccountItem account={account} />)}
+      {accounts && accounts.slice(0, 20).map(account => <AccountItem account={account} brockers={brockers}/>)}
     </table>
   );
 };

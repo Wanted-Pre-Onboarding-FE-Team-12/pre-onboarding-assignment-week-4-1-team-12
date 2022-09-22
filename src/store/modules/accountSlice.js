@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAccountList } from '@api/accountApi';
+import { getAccountList, getBrokers } from '@api/accountApi';
 
 export const fetchAccountList = createAsyncThunk('account/fetchAccountList', async () => {
   try {
@@ -10,13 +10,24 @@ export const fetchAccountList = createAsyncThunk('account/fetchAccountList', asy
     return error.response;
   }
 });
+export const fetchBrockers = createAsyncThunk('account/fetchBrockers', async () => {
+    try{
+        const response = await getBrokers();
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        return error.response;
+    }
+})
 
 const accountSlice = createSlice({
   name: 'accountList',
-  initialState: { entities: [], loading: 'idle' },
+  initialState: { entities: [], brockers:[], loading: 'idle' },
   reducers: {
     //행동
-    setAccountList(state, action) {},
+    setAccountList(state, action) {
+
+    },
     filterAccountList(state, action, filterKey) {
       state.filter();
     },
@@ -28,8 +39,11 @@ const accountSlice = createSlice({
     builder.addCase(fetchAccountList.fulfilled, (state, action) => {
       // Add user to the state array
       state.entities.push(action.payload);
-    });
-  },
+    })
+    builder.addCase(fetchBrockers.fulfilled, (state, action)=>{
+        state.brockers.push(action.payload)
+    })
+    }
 });
 
 export const { setAccountList, filterAccountList, searchAccountWithQuery, pagenateAccountList } =

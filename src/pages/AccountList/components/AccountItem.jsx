@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AccountItem = ({ account }) => {
+const AccountItem = ({ account, brockers }) => {
   const {
     //id, //그냥 아이디
     //user_id,
@@ -22,14 +22,14 @@ const AccountItem = ({ account }) => {
   function accountNumberMasking(number) {
     return number.replace(/(?<=\d{2})\d(?=\d{2})/g, '*');
   }
-  function remainDate(dateAndTime){ 
-    const date = dateAndTime.split('T')[0] 
-    return date
+  function remainDate(dateAndTime) {
+    const date = dateAndTime.split('T')[0];
+    return date;
   }
   return (
     <tr>
       <td>{uuid}</td>
-      <td>{broker_id}</td>
+      <td>{brockers[broker_id]}</td>
       <td>{accountNumberMasking(number)}</td>
       <td>{status}</td>
       <td>{name}</td>
