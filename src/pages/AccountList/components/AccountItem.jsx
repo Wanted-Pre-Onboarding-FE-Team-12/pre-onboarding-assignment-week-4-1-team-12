@@ -19,8 +19,12 @@ const AccountItem = ({ account }) => {
   function applyCommas(number) {
     return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
-  function accountNumberMasking(number){
-    return number.replace(/(?<=\d{2})\d(?=\d{2})/g,'*');
+  function accountNumberMasking(number) {
+    return number.replace(/(?<=\d{2})\d(?=\d{2})/g, '*');
+  }
+  function remainDate(dateAndTime){ 
+    const date = dateAndTime.split('T')[0] 
+    return date
   }
   return (
     <tr>
@@ -32,7 +36,7 @@ const AccountItem = ({ account }) => {
       <td>{applyCommas(assets)}</td>
       <td>{applyCommas(payments)}</td>
       <td>{is_active ? '✅' : '⛔'}</td>
-      <td>{created_at}</td>
+      <td>{remainDate(created_at)}</td>
     </tr>
   );
 };
