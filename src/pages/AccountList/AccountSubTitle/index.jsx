@@ -30,7 +30,7 @@ const AccountSubTitleContainer = styled.div`
   font-weight: bold;
   > * {
     text-align: center;
-    flex-basis: 100px;
-    width: 100px;
+    flex-basis: 110px;
+    width: 110px;
   }
 `;
