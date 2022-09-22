@@ -8,14 +8,14 @@ export const getAccountList = async () => {
 export const getBrokers = async () => {
   const response = await authInstance.get('/brokers');
   return response;
-}
+};
 
-export const getBrokerFormat = async() => {
-  const response = await authInstance.get('/brokersFormat');
+export const getUsers = async () => {
+  const response = await authInstance.get('/users');
   return response;
-}
+};
 
-export const getAccountStatus = async() => {
+export const getAccountStatus = async () => {
   const response = await authInstance.get('/accountStatus');
   return response;
-}
+};

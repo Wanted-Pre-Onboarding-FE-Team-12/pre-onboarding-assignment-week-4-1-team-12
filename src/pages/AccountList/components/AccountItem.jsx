@@ -1,10 +1,10 @@
 import React from 'react';
 
-const AccountItem = ({ account, brockers }) => {
+const AccountItem = ({ account, brockers, users }) => {
   const {
     //id, //그냥 아이디
-    //user_id,
-    uuid, // 이거 참조해서 user_name나와야함.
+    user_id,
+    //uuid, // 이거 참조해서 user_name나와야함.
     broker_id, // brockers.json으로 브로커명 보여야함
     status, //운용중, accountStatus.json 를 참조하여 실제 이름으로 보여져야 합니다.
     number, //앞 뒤 각각 두글자를 제외하고 나머지는 글자수에 맞게 * 글자로 마스킹 처리가 필요합니다.
@@ -26,9 +26,13 @@ const AccountItem = ({ account, brockers }) => {
     const date = dateAndTime.split('T')[0];
     return date;
   }
+  function setUserName(target_id) {
+    const result = users.find(user=>{return user.id === target_id})
+    return result.name
+  }
   return (
     <tr>
-      <td>{uuid}</td>
+      <td>{setUserName(user_id)}</td>
       <td>{brockers[broker_id]}</td>
       <td>{accountNumberMasking(number)}</td>
       <td>{status}</td>

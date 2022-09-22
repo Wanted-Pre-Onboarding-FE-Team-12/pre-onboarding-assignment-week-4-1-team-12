@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAccountList, getBrokers } from '@api/accountApi';
+import { getAccountList, getBrokers, getUsers } from '@api/accountApi';
 
 export const fetchAccountList = createAsyncThunk('account/fetchAccountList', async () => {
   try {
@@ -11,23 +11,30 @@ export const fetchAccountList = createAsyncThunk('account/fetchAccountList', asy
   }
 });
 export const fetchBrockers = createAsyncThunk('account/fetchBrockers', async () => {
-    try{
-        const response = await getBrokers();
-        return response.data;
+  try {
+    const response = await getBrokers();
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+});
+export const fetchUsers = createAsyncThunk('account/fetchUsers', async () => {
+    try {
+      const response = await getUsers();
+      return response.data;
     } catch (error) {
-        console.log(error);
-        return error.response;
+      console.log(error);
+      return error.response;
     }
-})
+  });
 
 const accountSlice = createSlice({
   name: 'accountList',
-  initialState: { entities: [], brockers:[], loading: 'idle' },
+  initialState: { entities: [], brockers: [], users:[], loading: 'idle' },
   reducers: {
     //행동
-    setAccountList(state, action) {
-
-    },
+    setAccountList(state, action) {},
     filterAccountList(state, action, filterKey) {
       state.filter();
     },
@@ -39,11 +46,14 @@ const accountSlice = createSlice({
     builder.addCase(fetchAccountList.fulfilled, (state, action) => {
       // Add user to the state array
       state.entities.push(action.payload);
-    })
-    builder.addCase(fetchBrockers.fulfilled, (state, action)=>{
-        state.brockers.push(action.payload)
-    })
-    }
+    });
+    builder.addCase(fetchBrockers.fulfilled, (state, action) => {
+      state.brockers.push(action.payload);
+    });
+    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+        state.users.push(action.payload);
+      });
+  },
 });
 
 export const { setAccountList, filterAccountList, searchAccountWithQuery, pagenateAccountList } =
