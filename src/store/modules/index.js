@@ -7,7 +7,7 @@ const reducer = (state, action) => {
   return combineReducers({
     auth: authSlice,
     common: commonSlice,
-    account: accountSlice
+    account: accountSlice,
   })(state, action);
 };
 

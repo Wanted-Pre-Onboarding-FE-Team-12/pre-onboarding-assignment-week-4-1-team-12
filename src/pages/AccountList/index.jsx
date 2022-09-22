@@ -3,7 +3,11 @@ import Layout from '@layout/index';
 import AccountsContainer from './components/AccountsContainer';
 
 const Accounts = () => {
-  return <Layout><AccountsContainer/></Layout>;
+  return (
+    <Layout>
+      <AccountsContainer />
+    </Layout>
+  );
 };
 
 export default Accounts;
