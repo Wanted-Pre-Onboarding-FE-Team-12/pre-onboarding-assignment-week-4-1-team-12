@@ -7,6 +7,7 @@ import {
   getBrokerFormat,
   getUsers,
 } from '@store/modules/accountSlice';
+import AccountSubTitle from './AccountSubTitle/AccountSubTitle';
 import ListItem from './ListItem';
 import Layout from '@layout/index';
 import styled from 'styled-components';
@@ -57,6 +58,7 @@ const AccountList = () => {
   return (
     <Layout>
       <AccountListContainer>
+        <AccountSubTitle />
         {accounts?.map((account, idx) => (
           <ListItem
             key={idx}

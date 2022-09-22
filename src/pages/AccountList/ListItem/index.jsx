@@ -1,24 +1,30 @@
 import { useSelector } from 'react-redux';
-import { makeThousandSeparator } from '@utils/string';
+import { useNavigate } from 'react-router-dom';
+import { makeThousandSeparator, makeAccountNumberMasking } from '@utils/account';
 import styled from 'styled-components';
 
-const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
-  const { broker_id, user_id, status, number, name, assets, payments, is_active, created_at } =
-    account;
+/**
+ * - [ ] 계좌번호 앞, 뒤 각각 두 글자를 제외하고 나머지는 글자수에 맞게 '*' 마스킹 처리
+ *
+ */
 
+const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
+  const { broker_id, id, user_id, status, number, name, assets, payments, is_active, created_at } =
+    account;
+  const navigate = useNavigate();
   const { brokerList } = useSelector(({ account }) => account);
 
   return (
     <AccountListContainer>
-      <p>고객명: {userIdHashObj[user_id] ?? '-'} </p>
-      <p>브로커명: {brokerList[broker_id] ?? '-'}</p>
-      <p>계좌번호: {number}</p>
-      <p>계좌상태: {accountStatusHashObj[status] ?? '-'}</p>
-      <p>계좌명: {name}</p>
-      <p>평가금액: {makeThousandSeparator(assets)}</p>
-      <p>입금금액: {makeThousandSeparator(payments)}</p>
-      <p>계좌활성화여부: {is_active ? 'O' : 'X'}</p>
-      <p>계좌개설일: {created_at.split('T')[0]}</p>
+      <p>{brokerList[broker_id] ?? '-'}</p>
+      <p onClick={() => navigate(`/accounts/${id}`)}>{makeAccountNumberMasking(number) ?? '-'}</p>
+      <p onClick={() => navigate(`/users/${user_id}`)}>{userIdHashObj[user_id] ?? '-'} </p>
+      <p>{accountStatusHashObj[status] ?? '-'}</p>
+      <p>{name}</p>
+      <p>{makeThousandSeparator(assets)}</p>
+      <p>{makeThousandSeparator(payments)}</p>
+      <p>{is_active ? 'O' : 'X'}</p>
+      <p>{created_at.split('T')[0]}</p>
     </AccountListContainer>
   );
 };
@@ -26,14 +32,18 @@ const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
 export default ListItem;
 
 const AccountListContainer = styled.div`
-  width: 100%;
-  padding: 1rem 2rem;
-  background-color: #efebe9;
-  margin-bottom: 3rem;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem 2rem;
+  background-color: #efebe9;
+  margin-bottom: 1.4rem;
   > * {
-    padding-right: 1rem;
+    flex-basis: 100px;
+    width: 100px;
+    text-align: center;
     font-size: 14px;
   }
 `;
