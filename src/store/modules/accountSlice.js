@@ -16,16 +16,16 @@ const accountSlice = createSlice({
     name: 'accountList',
     initialState : { entities: [], loading: 'idle' },
     reducers :{ //행동
-        setAccountList(state){
+        setAccountList(state, action){
 
         },
-        filterAccountList(state, filterKey){
+        filterAccountList(state, action, filterKey){
+            state.filter()
+        },
+        searchAccountWithQuery(state, action, query){
 
         },
-        searchAccountWithQuery(state, query){
-
-        },
-        pagenateAccountList(state, page, limit){
+        pagenateAccountList(state,action, page, limit){
 
         }
     },
@@ -38,4 +38,5 @@ const accountSlice = createSlice({
       },
 })
 
+export const {setAccountList, filterAccountList, searchAccountWithQuery, pagenateAccountList} = accountSlice.actions;
 export default accountSlice.reducer;
