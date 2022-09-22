@@ -14,12 +14,10 @@ const AccountsList = () => {
 
   useEffect(() => {
     getUserAccount().then(res => {
-      const accounts = res.data.filter(({ user_id }) => user_id === 1);
+      const accounts = res.data.filter(({ user_id }) => user_id === 5);
       setUserAccountInfo(accounts);
     });
   }, []);
-
-  console.log(userAcountInfo);
 
   return (
     <>
