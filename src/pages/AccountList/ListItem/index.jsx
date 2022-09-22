@@ -3,11 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { makeThousandSeparator, makeAccountNumberMasking } from '@utils/account';
 import styled from 'styled-components';
 
-/**
- * - [ ] 계좌번호 앞, 뒤 각각 두 글자를 제외하고 나머지는 글자수에 맞게 '*' 마스킹 처리
- *
- */
-
 const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
   const { broker_id, id, user_id, status, number, name, assets, payments, is_active, created_at } =
     account;
