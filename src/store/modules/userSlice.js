@@ -1,13 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import jwtDecode from 'jwt-decode';
-
-// import useToastMessage from '@hooks/useToastMessage';
-// import { TOAST_MESSAGE } from '@utils/toastMessage';
-// import * as authApi from '@api/authApi';
 import * as userApi from '@api/userApi';
-// import { getAccessToken, removeAccessToken, setAccessToken } from '@utils/storage/token';
-
-// const initialState = [];
 
 export const getUser = createAsyncThunk('users', async () => {
   const response = await userApi.getUserList();
@@ -53,10 +45,14 @@ export const userSlice = createSlice({
     staffUser: [],
     activeUser: [],
     searchUser: [],
+    updated: false,
   },
   reducers: {
     select(state, action) {
       state.text = action.payload;
+    },
+    updateData(state, action) {
+      state.updated = !state.updated;
     },
   },
   extraReducers: builder => {

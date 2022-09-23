@@ -1,4 +1,5 @@
 import { authInstance } from './index';
+import uuid from 'react-uuid';
 
 export const getUserList = async () => {
   const response = await authInstance.get('/users');
@@ -41,6 +42,25 @@ export const getActiveUser = async () => {
 
 export const getSearchUser = async text => {
   const response = await authInstance.get(`/users?q=${text}`);
+  return response;
+};
+
+export const createUser = async (usersParams, settingParams) => {
+  const now = new Date().toISOString();
+  usersParams.uuid = uuid();
+  usersParams.created_at = now;
+  usersParams.updated_at = now;
+  const response = await authInstance.post('/users', usersParams);
+  const createdUuid = response.data.user.uuid;
+  settingParams.uuid = createdUuid;
+  settingParams.created_at = now;
+  settingParams.updated_at = now;
+  await authInstance.post('/usersetting', settingParams);
+  return response;
+};
+
+export const updateUser = async (id, updateParams) => {
+  const response = await authInstance.put(`/users/${id}`, updateParams);
   return response;
 };
 

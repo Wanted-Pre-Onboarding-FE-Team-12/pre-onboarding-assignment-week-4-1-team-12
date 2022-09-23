@@ -7,43 +7,18 @@ import SearchUserList from './Components/SearchUserList';
 import UserSearch from './Components/UserSearch';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSlice } from '@store/modules/userSlice';
-
-// import React, { useState } from 'react';
-// import { getSearchUser } from '@store/modules/userSlice';
-
-// const UserSearch = () => {
-//   const dispatch = useDispatch();
-//   const [text, setText] = useState('');
-//   const searchResult = useSelector(state => state.userList.searchUser);
-//   const select = useSelector(state => state.userList.text);
-
-//   const search = e => {
-//     e.preventDefault();
-//     dispatch(getSearchUser(text));
-//     dispatch(userSlice.actions.select(text));
-//     setText('');
-//     console.log('a :', searchResult);
-//     console.log('select :', select);
-//   };
-
-//   return (
-//     <div>
-//       <form onSubmit={search}>
-//         <input type="text" value={text} onChange={e => setText(e.target.value)}></input>
-//         <button type="submit">검색</button>
-//       </form>
-//     </div>
-//   );
-// };
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 function UserList() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const select = useSelector(state => state.userList.text);
 
   return (
     <Layout>
       <UserSearch />
-      <div>
+      <FilterDiv>
         <button
           onClick={() => {
             dispatch(userSlice.actions.select('all'));
@@ -65,7 +40,18 @@ function UserList() {
         >
           활성화 유저
         </button>
-      </div>
+        <button
+          onClick={() => {
+            navigate('/users/create', {
+              state: {
+                prevPage: 1,
+              },
+            });
+          }}
+        >
+          사용자 추가
+        </button>
+      </FilterDiv>
       {select === 'staff' ? (
         <StaffUserList />
       ) : select === 'active' ? (
@@ -80,3 +66,12 @@ function UserList() {
 }
 
 export default UserList;
+
+const FilterDiv = styled.div`
+  text-align: right;
+  margin-bottom: 10px;
+  button {
+    margin: 10px;
+    padding: 4px;
+  }
+`;
