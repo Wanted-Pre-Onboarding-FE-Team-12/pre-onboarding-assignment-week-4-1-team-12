@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const AccountSubTitle = () => {
   return (
     <AccountSubTitleContainer>
-      <p>증권사{/* 브로커명 */} </p>
+      <p>증권사</p>
       <p>계좌번호</p>
       <p>고객명 </p>
       <p>계좌상태</p>
