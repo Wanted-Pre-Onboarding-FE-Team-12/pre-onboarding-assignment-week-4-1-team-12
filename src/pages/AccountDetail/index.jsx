@@ -15,7 +15,9 @@ const AccountDetail = () => {
   const location = useLocation();
   const accountId = +location.pathname.split('/')[2];
   const [isLoading, setIsLoading] = useState(true);
-  const { userList, accountStatusList, brokerList } = useSelector(({ account }) => account);
+  const { userList, accountStatusList, brokerList, brokerFormatList } = useSelector(
+    ({ account }) => account,
+  );
   const [account, setAccount] = useState([]);
   const {
     assets,
@@ -29,6 +31,7 @@ const AccountDetail = () => {
     created_at,
     updated_at,
   } = account;
+  const [brokerFormatStr, setBrokerFormatStr] = useState('');
 
   const accountUserIdHashObj = useMemo(() => {
     return userList.reduce((acc, cur) => {
@@ -43,21 +46,36 @@ const AccountDetail = () => {
     return Object.fromEntries(revertKeyValue);
   }, [accountStatusList]);
 
+  const convertFormat = (str, num) => {
+    const numArr = num.toString();
+    let result = '';
+    let numIndex = 0;
+
+    for (const character of str) {
+      if (character === '-') {
+        result += '-';
+      } else {
+        result += numArr[numIndex++];
+      }
+    }
+    return result;
+  };
+
   useEffect(() => {
     const getAccountDetailData = async () => {
       try {
         const payload = await getAccountDetail(accountId);
         if (payload) {
           setAccount({ ...payload });
-
           setIsLoading(false);
+          setBrokerFormatStr(brokerFormatList[0][parseInt(broker_id)]);
         }
       } catch (error) {
         setIsLoading(false);
       }
     };
     getAccountDetailData();
-  }, [accountId]);
+  }, [accountId, broker_id, brokerFormatList]);
 
   if (isLoading) return <Loading />;
 
@@ -82,7 +100,9 @@ const AccountDetail = () => {
         <div>
           <div>
             <ColumnTitle>계좌 번호</ColumnTitle>
-            <ColumnContent>{number}</ColumnContent>
+            <ColumnContent>
+              {brokerFormatStr === undefined ? number : convertFormat(brokerFormatStr, number)}
+            </ColumnContent>
           </div>
           <div>
             <ColumnTitle>계좌 상태</ColumnTitle>
@@ -136,13 +156,11 @@ const AccountDetailContainer = styled.div`
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
   margin-bottom: 3rem;
-
   & > div {
     width: 80%;
     background-color: #fafafa;
     margin: 1rem 0;
   }
-
   & > div:nth-child(1),
   div:nth-child(2),
   div:nth-child(3),
@@ -150,7 +168,6 @@ const AccountDetailContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-
     & > div {
       width: 50%;
     }
@@ -158,7 +175,7 @@ const AccountDetailContainer = styled.div`
 `;
 
 const ColumnTitle = styled.h3`
-  font-size: 20px;
+  font-size: 18px;
   display: inline;
   background-color: #d7ccc8;
   padding: 1.5rem;
@@ -167,6 +184,6 @@ const ColumnTitle = styled.h3`
 `;
 
 const ColumnContent = styled.span`
-  font-size: 18px;
+  font-size: 16px;
   padding-left: 20px;
 `;
