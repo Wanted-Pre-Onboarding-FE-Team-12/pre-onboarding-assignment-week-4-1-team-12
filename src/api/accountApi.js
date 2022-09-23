@@ -23,3 +23,9 @@ export const getBrokerFormatList = async () => {
   const response = await authInstance.get('/brokerFormat');
   return response;
 };
+
+/** account detail */
+export const getAccountDetail = async id => {
+  const response = await authInstance.get(`${/accounts/}${id}`);
+  return response.data;
+};
