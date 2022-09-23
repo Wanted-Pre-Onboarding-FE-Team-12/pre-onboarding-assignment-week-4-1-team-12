@@ -24,7 +24,7 @@ function UserList() {
             dispatch(userSlice.actions.select('all'));
           }}
         >
-          모든 유저
+          모든 사용자
         </button>
         <button
           onClick={() => {
@@ -38,7 +38,7 @@ function UserList() {
             dispatch(userSlice.actions.select('active'));
           }}
         >
-          활성화 유저
+          활성화
         </button>
         <button
           onClick={() => {
