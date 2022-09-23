@@ -13,6 +13,7 @@ const variables = {
     darkRed: 'hsl(360, 67%, 44%)',
     lightRed: 'hsl(360, 71%, 66%)',
     lightOrange: 'hsl(29, 74%, 92%)',
+    neonBlue: '#2196f3',
   },
   sizes: {
     maxWidth: '1100px',

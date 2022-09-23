@@ -1,13 +1,16 @@
 import React from 'react';
-import { FaBars } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai';
+import { BiLogOut } from 'react-icons/bi';
 
 import { menuItem } from '@utils/menuItem';
 
 // CSS
 import * as S from './style';
+import { IoLogoBitcoin } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { sidebarToggle } from '@store/modules/commonSlice';
+import MenuItem from '@components/MenuItem';
+import { Logout } from '@store/modules/authSlice';
 
 const Sidebar = () => {
   const { isSidebarOpen } = useSelector(state => state.common);
@@ -16,22 +19,42 @@ const Sidebar = () => {
   const sidebarToggleHandler = () => {
     dispatch(sidebarToggle());
   };
+
+  const logoutHandler = () => {
+    dispatch(Logout());
+  };
+
   return (
     <S.SidebarWrapper isOpen={isSidebarOpen}>
-      <S.SidebarTop onClick={sidebarToggleHandler}>
-        <h1 className="logo">Logo</h1>
-        <div className="bars">
-          <FaBars />
+      <S.SidebarTop isOpen={isSidebarOpen}>
+        <div className="logo">
+          <IoLogoBitcoin />
         </div>
+        <div className="bars" onClick={sidebarToggleHandler}>
+          {isSidebarOpen ? <AiOutlineMenuFold /> : <AiOutlineMenuUnfold />}
+        </div>
+        <div className="underline" />
       </S.SidebarTop>
-      <>
+      <S.SidebarMenu>
         {menuItem.map((item, idx) => (
-          <NavLink to={item.path} key={idx}>
-            <div className="icon">{item.icon}</div>
-            <div className="link_text">{item.name}</div>
-          </NavLink>
+          <MenuItem
+            path={item.path}
+            idx={idx}
+            icon={item.icon}
+            name={item.name}
+            isSidebarOpen={isSidebarOpen}
+            styleClass="link"
+          />
         ))}
-      </>
+      </S.SidebarMenu>
+      <S.SidebarBottom onClick={logoutHandler}>
+        <MenuItem
+          icon={<BiLogOut />}
+          name="로그아웃"
+          isSidebarOpen={isSidebarOpen}
+          styleClass="logout-btn"
+        />
+      </S.SidebarBottom>
     </S.SidebarWrapper>
   );
 };
