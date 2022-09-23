@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getAccountDetail } from '@api/accountApi';
-import Layout from '@layout/index';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { makeThousandSeparator } from '@utils/account';
+import Layout from '@layout/index';
+import styled from 'styled-components';
+import Loading from '@components/Loading';
 
 /**
  * issue
@@ -13,6 +14,7 @@ import { makeThousandSeparator } from '@utils/account';
 const AccountDetail = () => {
   const location = useLocation();
   const accountId = +location.pathname.split('/')[2];
+  const [isLoading, setIsLoading] = useState(true);
   const { userList, accountStatusList, brokerList } = useSelector(({ account }) => account);
   const [account, setAccount] = useState([]);
   const {
@@ -42,13 +44,20 @@ const AccountDetail = () => {
 
   useEffect(() => {
     const getAccountDetailData = async () => {
-      const payload = await getAccountDetail(accountId);
-      if (payload) {
-        setAccount({ ...payload });
+      try {
+        const payload = await getAccountDetail(accountId);
+        if (payload) {
+          setAccount({ ...payload });
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setIsLoading(false);
       }
     };
     getAccountDetailData();
   }, [accountId]);
+
+  if (isLoading) return <Loading />;
 
   return (
     <Layout>

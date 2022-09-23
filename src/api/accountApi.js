@@ -32,16 +32,12 @@ export const getAccountDetail = async id => {
 };
 
 /**
- * filtering
- *  - bank name
- *  - account is active
- *  - account status
- *  - search word
- *
- *  search 범위가 account list response data들에 한해서만 가능함.
- *   ex) uuid가 검색 됨
- *   ex) 한글 증권사 검색 불가능
- *   ex) 고객명 한글 검색 불가, user_id로 검색 가능 (number)
+ * filtering & search
+ * issue
+ * search 범위가 account list response data들에 한해서만 가능함.
+ *  ex) uuid가 검색 됨
+ *  ex) 한글 증권사 검색 불가능
+ *  ex) 고객명 한글 검색 불가, user_id로 검색 가능 (number)
  * */
 export const getAccounts = async query => {
   const queryStr = queryString.stringify(query, { skipEmptyString: true, skipNull: true });

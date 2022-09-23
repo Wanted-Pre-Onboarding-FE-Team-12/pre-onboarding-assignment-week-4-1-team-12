@@ -18,6 +18,7 @@ import Layout from '@layout/index';
 import styled from 'styled-components';
 import useToastMessage from '@hooks/useToastMessage';
 import { TOAST_MESSAGE } from '@utils/toastMessage';
+import Loading from '@components/Loading';
 
 const AccountList = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const AccountList = () => {
     selectAccountIsActive: '',
     searchQuery: '',
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const userIdHashObj = useMemo(() => {
     if (userList) {
@@ -81,9 +83,11 @@ const AccountList = () => {
           } else {
             setPage(1);
           }
+          setIsLoading(false);
         }
       } catch (error) {
         AlertErrorMessage();
+        setIsLoading(false);
       }
     };
     getData();
@@ -110,13 +114,17 @@ const AccountList = () => {
           } else {
             setPage(1);
           }
+          setIsLoading(false);
         }
       } catch (error) {
         AlertErrorMessage();
+        setIsLoading(false);
       }
     };
     getData();
   }, [filteringOption, page]);
+
+  if (isLoading) return <Loading />;
 
   return (
     <Layout>

@@ -12,7 +12,6 @@ import styled from 'styled-components';
 const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
   const { broker_id, id, user_id, status, number, name, assets, payments, is_active, created_at } =
     account;
-  console.log(account);
   const navigate = useNavigate();
   const { brokerList } = useSelector(({ account }) => account);
   const [assetInfo, setAssetInfo] = useState('');

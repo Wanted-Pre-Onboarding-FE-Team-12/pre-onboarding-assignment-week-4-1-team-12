@@ -3,15 +3,15 @@ import styled from 'styled-components';
 const AccountSubTitle = () => {
   return (
     <AccountSubTitleContainer>
-      <p>증권사</p>
-      <p>계좌번호</p>
-      <p>고객명 </p>
-      <p>계좌상태</p>
-      <p>계좌명</p>
-      <p>평가금액</p>
-      <p>입금금액</p>
-      <p>계좌활성화여부</p>
-      <p>계좌개설일</p>
+      <span>증권사</span>
+      <span>계좌번호</span>
+      <span>고객명 </span>
+      <span>계좌상태</span>
+      <span>계좌명</span>
+      <span>평가금액</span>
+      <span>입금금액</span>
+      <span>계좌활성화여부</span>
+      <span>계좌개설일</span>
     </AccountSubTitleContainer>
   );
 };
