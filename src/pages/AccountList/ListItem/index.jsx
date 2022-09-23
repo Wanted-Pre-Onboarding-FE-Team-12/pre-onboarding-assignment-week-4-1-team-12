@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { makeThousandSeparator, makeAccountNumberMasking } from '@utils/account';
+import {
+  makeThousandSeparator,
+  makeAccountNumberMasking,
+  makeDataFormatTheYearMonthDay,
+} from '@utils/account';
 import styled from 'styled-components';
 
 /**
@@ -50,7 +54,7 @@ const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
       <p style={{ color: assetInfo }}>{makeThousandSeparator(assets)}</p>
       <p>{makeThousandSeparator(payments)}</p>
       <p>{is_active ? '활성화' : '비활성화'}</p>
-      <p>{created_at.split('T')[0]}</p>
+      <p>{makeDataFormatTheYearMonthDay(created_at)}</p>
     </AccountListContainer>
   );
 };
@@ -68,6 +72,7 @@ const AccountListContainer = styled.div`
   background-color: #ede7f6;
   margin-bottom: 1.4rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 10px;
   > * {
     flex-basis: 110px;
     width: 110px;

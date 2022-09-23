@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Loading = () => {
   return (
-    <LoadingContainer class="loading-ring">
+    <LoadingContainer className="loading-ring">
       <div></div>
       <div></div>
       <div></div>

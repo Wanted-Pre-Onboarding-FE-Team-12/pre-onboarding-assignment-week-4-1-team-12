@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getAccountDetail } from '@api/accountApi';
 import { useSelector } from 'react-redux';
-import { makeThousandSeparator } from '@utils/account';
+import { makeThousandSeparator, makeDataFormatTheYearMonthDayToSlash } from '@utils/account';
 import Layout from '@layout/index';
 import styled from 'styled-components';
 import Loading from '@components/Loading';
@@ -20,7 +20,7 @@ const AccountDetail = () => {
   const {
     assets,
     payments,
-    user_id,
+    id,
     is_active,
     broker_id,
     name,
@@ -32,6 +32,7 @@ const AccountDetail = () => {
 
   const accountUserIdHashObj = useMemo(() => {
     return userList.reduce((acc, cur) => {
+      if (!cur.name) return acc;
       acc[cur.id] = cur.name;
       return acc;
     }, {});
@@ -48,6 +49,7 @@ const AccountDetail = () => {
         const payload = await getAccountDetail(accountId);
         if (payload) {
           setAccount({ ...payload });
+
           setIsLoading(false);
         }
       } catch (error) {
@@ -61,47 +63,56 @@ const AccountDetail = () => {
 
   return (
     <Layout>
+      <DetailPageTitle>계좌 정보</DetailPageTitle>
       <AccountDetailContainer>
-        <h1>계좌 정보</h1>
         <div>
-          <span>고객 이름</span>
-          <span>{accountUserIdHashObj[user_id] ?? '-'}</span>
+          <div>
+            <ColumnTitle>은행 명</ColumnTitle>
+            <ColumnContent>{brokerList[broker_id] ?? '-'}</ColumnContent>
+          </div>
+          <div>
+            <ColumnTitle>계좌명</ColumnTitle>
+            <ColumnContent>{name}</ColumnContent>
+          </div>
+          <div>
+            <ColumnTitle>고객 이름</ColumnTitle>
+            <ColumnContent>{accountUserIdHashObj[id] ?? '고객명 오류 확인 필요'}</ColumnContent>
+          </div>
         </div>
         <div>
-          <span>은행 명</span>
-          <span>{brokerList[broker_id] ?? '-'}</span>
+          <div>
+            <ColumnTitle>계좌 번호</ColumnTitle>
+            <ColumnContent>{number}</ColumnContent>
+          </div>
+          <div>
+            <ColumnTitle>계좌 상태</ColumnTitle>
+            <ColumnContent>{accountStatusHashObj[status] ?? '-'}</ColumnContent>
+          </div>
+
+          <div>
+            <ColumnTitle>계좌 활성화 여부</ColumnTitle>
+            <ColumnContent>{is_active ? '계좌 사용 중' : '계좌 미사용'}</ColumnContent>
+          </div>
         </div>
         <div>
-          <span>계좌 번호</span>
-          <span>{number}</span>
+          <div>
+            <ColumnTitle>계좌 계설일</ColumnTitle>
+            <ColumnContent>{makeDataFormatTheYearMonthDayToSlash(created_at)}</ColumnContent>
+          </div>
+          <div>
+            <ColumnTitle>계좌 변경일</ColumnTitle>
+            <ColumnContent>{makeDataFormatTheYearMonthDayToSlash(updated_at)}</ColumnContent>
+          </div>
         </div>
         <div>
-          <span>계좌 상태</span>
-          <span>{accountStatusHashObj[status] ?? '-'}</span>
-        </div>
-        <div>
-          <span>계좌명</span>
-          <span>{name}</span>
-        </div>
-        <div>
-          <span>평가 금액</span>
-          <span>{makeThousandSeparator(assets)}</span>
-        </div>
-        <div>
-          <span>입금 금액</span>
-          <span>{makeThousandSeparator(payments)}</span>
-        </div>
-        <div>
-          <span>계좌 활성화 여부</span>
-          <span>{is_active ? '활성화' : '비활성화'}</span>
-        </div>
-        <div>
-          <span>계좌 계설일</span>
-          <span>{created_at}</span>
-        </div>
-        <div>
-          <span>계좌 변경일</span>
-          <span>{updated_at}</span>
+          <div>
+            <ColumnTitle>평가 금액</ColumnTitle>
+            <ColumnContent>{makeThousandSeparator(assets)} 원</ColumnContent>
+          </div>
+          <div>
+            <ColumnTitle>입금 금액</ColumnTitle>
+            <ColumnContent>{makeThousandSeparator(payments)} 원</ColumnContent>
+          </div>
         </div>
       </AccountDetailContainer>
     </Layout>
@@ -110,6 +121,52 @@ const AccountDetail = () => {
 
 export default AccountDetail;
 
+const DetailPageTitle = styled.h1`
+  font-size: 24px;
+  margin: 0 0 3rem 1rem;
+`;
+
 const AccountDetailContainer = styled.div`
-  background-color: gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 8rem 3rem;
+  background-color: #efebe9;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  margin-bottom: 3rem;
+
+  & > div {
+    width: 80%;
+    background-color: #fafafa;
+    margin: 1rem 0;
+  }
+
+  & > div:nth-child(1),
+  div:nth-child(2),
+  div:nth-child(3),
+  div:nth-child(4) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > div {
+      width: 50%;
+    }
+  }
+`;
+
+const ColumnTitle = styled.h3`
+  font-size: 20px;
+  display: inline;
+  background-color: #d7ccc8;
+  padding: 1.5rem;
+  width: 170px;
+  text-align: center;
+`;
+
+const ColumnContent = styled.span`
+  font-size: 18px;
+  padding-left: 20px;
 `;

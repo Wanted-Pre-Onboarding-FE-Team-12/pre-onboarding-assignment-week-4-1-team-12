@@ -1,11 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getAccountStatus,
-  getBrokers,
-  getBrokerFormat,
-  getUsers,
-} from '@store/modules/accountSlice';
 import { getAccounts } from '@api/accountApi';
 import AccountSubTitle from './AccountSubTitle';
 import AccountBankSelectOption from './AccountBankSelectOption';
@@ -19,6 +13,12 @@ import styled from 'styled-components';
 import useToastMessage from '@hooks/useToastMessage';
 import { TOAST_MESSAGE } from '@utils/toastMessage';
 import Loading from '@components/Loading';
+import {
+  getAccountStatus,
+  getBrokers,
+  getBrokerFormat,
+  getUsers,
+} from '@store/modules/accountSlice';
 
 const AccountList = () => {
   const dispatch = useDispatch();
@@ -51,14 +51,17 @@ const AccountList = () => {
     return {};
   }, [accountStatusList]);
 
-  const handleChangeCurrentPage = number => {
+  const handleChangeCurrentPage = useCallback(number => {
     setPage(number);
-  };
+  }, []);
 
-  const handleUpdateFilteringOption = (option, value) => {
-    setPage(1);
-    setFilteringOption({ ...filteringOption, [option]: value });
-  };
+  const handleUpdateFilteringOption = useCallback(
+    (option, value) => {
+      setPage(1);
+      setFilteringOption({ ...filteringOption, [option]: value });
+    },
+    [filteringOption],
+  );
 
   const AlertErrorMessage = () => {
     useToastMessage(TOAST_MESSAGE.ACCOUNT.FAILED_TO_GET_LIST, 'error');
