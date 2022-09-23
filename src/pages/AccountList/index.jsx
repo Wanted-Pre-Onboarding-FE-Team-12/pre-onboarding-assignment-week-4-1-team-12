@@ -21,7 +21,6 @@ const AccountList = () => {
   const dispatch = useDispatch();
   const [accounts, setAccounts] = useState([]);
   const { userList, accountStatusList, brokerList } = useSelector(({ account }) => account);
-  // 은행명, 계좌상태, 계좌 활성화 여부, 검색어 상태값
   const [filteringOption, setFilteringOption] = useState({
     selectBroker: '',
     selectAccountState: '',
@@ -46,9 +45,7 @@ const AccountList = () => {
     return {};
   }, [accountStatusList]);
 
-  // 은행명, 계좌상태, 계좌 활성화 여부에 따른 state 업데이트 함수
   const handleUpdateFilteringOption = (option, value) => {
-    // 업데이트 된 종류에 따라 state 업데이트
     setFilteringOption({ ...filteringOption, [option]: value });
   };
 
@@ -73,7 +70,6 @@ const AccountList = () => {
     getData();
   }, []);
 
-  /** select option들 값 변경 될 때 마다 필터링 요청 */
   useEffect(() => {
     const query = {
       q: filteringOption.searchQuery,
@@ -99,19 +95,16 @@ const AccountList = () => {
       <AccountListContainer>
         <OptionContainerBox>
           <div>
-            {/** 은행 선택 옵션 */}
             <AccountBankSelectOption
               brokerList={brokerList}
               selectOptionKey="selectBroker"
               handleUpdateFilteringOption={handleUpdateFilteringOption}
             />
-            {/** 계좌 상태별 옵션 */}
             <AccountStatusSelectOption
               accountStatusList={accountStatusList}
               selectOptionKey="selectAccountState"
               handleUpdateFilteringOption={handleUpdateFilteringOption}
             />
-            {/** 계좌 활성화 여부 옵션 */}
             <AccountActiveSelectOption
               selectOptionKey="selectAccountIsActive"
               handleUpdateFilteringOption={handleUpdateFilteringOption}

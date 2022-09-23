@@ -3,10 +3,8 @@ import { ImSearch } from 'react-icons/im';
 import { useState } from 'react';
 
 const AccountSearch = ({ selectOptionKey, handleUpdateFilteringOption }) => {
-  // input state
   const [inputSearchValue, setInputSearchValue] = useState('');
 
-  // input change update
   const handleInputValueUpdate = e => {
     setInputSearchValue(e.target.value);
   };
