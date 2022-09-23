@@ -8,6 +8,7 @@ const reducer = (state, action) => {
     auth: authSlice,
     common: commonSlice,
     user: userSlice,
+    userList: userSlice,
   })(state, action);
 };
 
