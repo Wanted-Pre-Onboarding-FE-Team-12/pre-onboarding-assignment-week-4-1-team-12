@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Card } from 'antd';
-import { getUserAccount } from '../../../api/userApi';
+
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccount } from '@store/modules/userSlice';
 
 const gridStyle = {
   width: '33%',
   textAlign: 'center',
 };
 
-const AccountsList = () => {
-  const [userAcountInfo, setUserAccountInfo] = useState([]);
+const AccountsList = props => {
+  const dispatch = useDispatch();
+  const { account } = useSelector(state => state.user);
+  const filteredValue = account.filter(({ user_id }) => user_id === +props.userId);
 
   useEffect(() => {
-    getUserAccount().then(res => {
-      const accounts = res.data.filter(({ user_id }) => user_id === 5);
-      setUserAccountInfo(accounts);
-    });
+    dispatch(getAccount());
   }, []);
 
   return (
     <>
       <Card title="계좌 목록">
-        {userAcountInfo?.map(account => {
+        {filteredValue?.map(account => {
           let assets = (account.assets * 1).toLocaleString('ko-KR');
 
           return (
