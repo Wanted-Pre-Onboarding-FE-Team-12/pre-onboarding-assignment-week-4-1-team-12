@@ -14,7 +14,6 @@ const AccountStatusSelectOption = ({
     }, []);
   }, [accountStatusList]);
 
-  // 선택한 계좌 상태 저장하는 함수
   const handleSelectAccountStateOption = option => {
     if (!option) {
       handleUpdateFilteringOption(selectOptionKey, '');

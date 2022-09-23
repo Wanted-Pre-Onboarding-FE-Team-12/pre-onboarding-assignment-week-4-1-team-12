@@ -1,8 +1,8 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { makeThousandSeparator, makeAccountNumberMasking } from '@utils/account';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
 
 /**
  * issue
@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from 'react';
 const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
   const { broker_id, id, user_id, status, number, name, assets, payments, is_active, created_at } =
     account;
+  console.log(account);
   const navigate = useNavigate();
   const { brokerList } = useSelector(({ account }) => account);
   const [assetInfo, setAssetInfo] = useState('');
@@ -42,7 +43,9 @@ const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
       <AccountInfo onClick={() => navigate(`/accounts/${id}`)}>
         {makeAccountNumberMasking(number) ?? '-'}
       </AccountInfo>
-      <p onClick={() => navigate(`/users/${user_id}`)}>{userIdHashObj[user_id] ?? '-'} </p>
+      <p onClick={() => navigate(`/users/${user_id}`)}>
+        {userIdHashObj[user_id] ?? '고객명 확인 필요'}
+      </p>
       <p>{accountStatusHashObj[status] ?? '-'}</p>
       <p>{name}</p>
       <p style={{ color: assetInfo }}>{makeThousandSeparator(assets)}</p>
@@ -61,9 +64,11 @@ const AccountListContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  height: 70px;
   padding: 1.5rem 2rem;
-  background-color: #efebe9;
+  background-color: #ede7f6;
   margin-bottom: 1.4rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   > * {
     flex-basis: 110px;
     width: 110px;

@@ -1,31 +1,34 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getAccounts,
   getAccountStatus,
   getBrokers,
   getBrokerFormat,
   getUsers,
 } from '@store/modules/accountSlice';
-import { getAccountFilteringList } from '@api/accountApi';
+import { getAccounts } from '@api/accountApi';
 import AccountSubTitle from './AccountSubTitle';
 import AccountBankSelectOption from './AccountBankSelectOption';
 import AccountStatusSelectOption from './AccountStatusSelectOption';
 import AccountActiveSelectOption from './AccountActiveSelectOption';
 import AccountSearch from './AccountSearch';
+import PageButton from '@components/PageButton';
 import ListItem from './ListItem';
 import Layout from '@layout/index';
 import styled from 'styled-components';
+import useToastMessage from '@hooks/useToastMessage';
+import { TOAST_MESSAGE } from '@utils/toastMessage';
 
 const AccountList = () => {
   const dispatch = useDispatch();
   const [accounts, setAccounts] = useState([]);
   const { userList, accountStatusList, brokerList } = useSelector(({ account }) => account);
-  // 은행명, 계좌상태, 계좌 활성화 여부, 검색어 상태값
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState('');
   const [filteringOption, setFilteringOption] = useState({
     selectBroker: '',
     selectAccountState: '',
-    selectAccountIsActive: false,
+    selectAccountIsActive: '',
     searchQuery: '',
   });
 
@@ -46,72 +49,90 @@ const AccountList = () => {
     return {};
   }, [accountStatusList]);
 
-  // 은행명, 계좌상태, 계좌 활성화 여부에 따른 state 업데이트 함수
+  const handleChangeCurrentPage = number => {
+    setPage(number);
+  };
+
   const handleUpdateFilteringOption = (option, value) => {
-    // 업데이트 된 종류에 따라 state 업데이트
+    setPage(1);
     setFilteringOption({ ...filteringOption, [option]: value });
+  };
+
+  const AlertErrorMessage = () => {
+    useToastMessage(TOAST_MESSAGE.ACCOUNT.FAILED_TO_GET_LIST, 'error');
   };
 
   useEffect(() => {
     const getData = async () => {
       try {
         const [response] = await Promise.all([
-          dispatch(getAccounts()),
+          getAccounts({ _page: page, _limit: 20 }),
           dispatch(getAccountStatus()),
           dispatch(getBrokers()),
           dispatch(getBrokerFormat()),
           dispatch(getUsers()),
         ]);
 
-        if (response.payload) {
-          setAccounts([...response.payload].splice(0, 20));
+        if (response) {
+          setAccounts([...response.data]);
+          const totalCount = response.headers['x-total-count'];
+          if (totalCount) {
+            setTotalPage(Math.ceil(parseInt(totalCount) / 20));
+          } else {
+            setPage(1);
+          }
         }
       } catch (error) {
-        console.log(error);
+        AlertErrorMessage();
       }
     };
     getData();
   }, []);
 
-  /** select option들 값 변경 될 때 마다 필터링 요청 */
   useEffect(() => {
     const query = {
       q: filteringOption.searchQuery,
       broker_id: filteringOption.selectBroker,
       status: filteringOption.selectAccountState,
       is_active: filteringOption.selectAccountIsActive,
+      _page: page,
+      _limit: 20,
     };
 
-    const getFilteringData = async () => {
+    const getData = async () => {
       try {
-        let response = await getAccountFilteringList(query);
-        console.log(response);
-        setAccounts([...response]);
+        let response = await getAccounts(query);
+        if (response) {
+          setAccounts([...response.data]);
+          const totalCount = response.headers['x-total-count'];
+          if (totalCount) {
+            setTotalPage(Math.ceil(parseInt(totalCount) / 20));
+          } else {
+            setPage(1);
+          }
+        }
       } catch (error) {
-        console.log(error);
+        AlertErrorMessage();
       }
     };
-    getFilteringData();
-  }, [filteringOption]);
+    getData();
+  }, [filteringOption, page]);
 
   return (
     <Layout>
       <AccountListContainer>
         <OptionContainerBox>
           <div>
-            {/** 은행 선택 옵션 */}
             <AccountBankSelectOption
               brokerList={brokerList}
               selectOptionKey="selectBroker"
               handleUpdateFilteringOption={handleUpdateFilteringOption}
             />
-            {/** 계좌 상태별 옵션 */}
             <AccountStatusSelectOption
               accountStatusList={accountStatusList}
               selectOptionKey="selectAccountState"
               handleUpdateFilteringOption={handleUpdateFilteringOption}
             />
-            {/** 계좌 활성화 여부 옵션 */}
             <AccountActiveSelectOption
               selectOptionKey="selectAccountIsActive"
               handleUpdateFilteringOption={handleUpdateFilteringOption}
@@ -133,6 +154,11 @@ const AccountList = () => {
             accountStatusHashObj={accountStatusHashObj}
           />
         ))}
+        <PageButton
+          totalPage={totalPage}
+          page={page}
+          handleChangeCurrentPage={handleChangeCurrentPage}
+        />
       </AccountListContainer>
     </Layout>
   );

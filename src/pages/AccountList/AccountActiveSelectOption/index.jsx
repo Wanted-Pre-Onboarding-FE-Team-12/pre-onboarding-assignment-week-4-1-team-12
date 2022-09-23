@@ -7,7 +7,6 @@ const AccountActiveSelectOption = ({ selectOptionKey, handleUpdateFilteringOptio
     { value: false, label: '비활성화' },
   ];
 
-  // 선택한 state 저장할 함수
   const handleSelectAccountActiveOption = option => {
     if (!option) {
       handleUpdateFilteringOption(selectOptionKey, '');
