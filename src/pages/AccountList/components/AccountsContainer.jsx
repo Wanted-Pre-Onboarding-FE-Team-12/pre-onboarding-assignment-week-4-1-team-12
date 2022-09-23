@@ -30,48 +30,45 @@ const AccountsContainer = () => {
 
   return (
     <AccountTable>
-        <TableHeader>
-            <tr>
-                <th>user-name</th>
-                <th>broker-name</th>
-                <th>account-number</th>
-                <th>account-status</th>
-                <th>account-name</th>
-                <th>assets</th>
-                <th>payments</th>
-                <th>active</th>
-                <th>created_at</th>
-            </tr>
-        </TableHeader>
-        <tbody>
-            {accounts &&
-            brockers &&
-            users &&
-            accountStatus &&
-            accounts
-                .map(account => (
-                <AccountItem
-                    key={account.uuid}
-                    account={account}
-                    brockers={brockers}
-                    users={users}
-                    accountStatus={accountStatus}
-                />
-                ))}
-        </tbody>
+      <TableHeader>
+        <tr>
+          <th>user-name</th>
+          <th>broker-name</th>
+          <th>account-number</th>
+          <th>account-status</th>
+          <th>account-name</th>
+          <th>assets</th>
+          <th>payments</th>
+          <th>active</th>
+          <th>created_at</th>
+        </tr>
+      </TableHeader>
+      <tbody>
+        {accounts &&
+          brockers &&
+          users &&
+          accountStatus &&
+          accounts.map(account => (
+            <AccountItem
+              key={account.uuid}
+              account={account}
+              brockers={brockers}
+              users={users}
+              accountStatus={accountStatus}
+            />
+          ))}
+      </tbody>
     </AccountTable>
   );
 };
 
 export default AccountsContainer;
 
-
 const AccountTable = styled.table`
-    width: 100%;
+  width: 100%;
 `;
 
 const TableHeader = styled.thead`
-    font-size: 1.5rem;
-    background-color: white;
+  font-size: 1.5rem;
+  background-color: white;
 `;
-

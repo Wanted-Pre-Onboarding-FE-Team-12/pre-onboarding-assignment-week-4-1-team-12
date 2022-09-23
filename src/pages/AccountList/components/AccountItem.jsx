@@ -2,17 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const AccountItem = ({ account, brockers, users, accountStatus }) => {
-  const {
-    user_id,
-    broker_id, 
-    status, 
-    number,
-    name,
-    assets,
-    payments,
-    is_active,
-    created_at,
-  } = account;
+  const { user_id, broker_id, status, number, name, assets, payments, is_active, created_at } =
+    account;
 
   function applyCommas(number) {
     return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -52,11 +43,16 @@ const AccountItem = ({ account, brockers, users, accountStatus }) => {
 export default AccountItem;
 
 const AccountRow = styled.tr`
-    font-size: 1.5rem;
-    
-    td {
-        padding: 2rem 0;
-        text-align:center;
-        border-bottom: 1px solid grey;
-    }
+  font-size: 1.5rem;
+
+  td {
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: 1px solid grey;
+  }
+
+  td:nth-child(1):hover {
+    cursor: pointer;
+    font-weight: 700;
+  }
 `;
