@@ -1,0 +1,16 @@
+export const INITIAL_USER_DATA = {
+  address: '',
+  age: 0,
+  birth_date: '',
+  created_at: '',
+  detail_address: '',
+  email: '',
+  gender_origin: '',
+  id: 0,
+  last_login: '',
+  name: '',
+  phone_number: '',
+  photo: '',
+  updated_at: '',
+  uuid: '',
+};

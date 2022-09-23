@@ -6,6 +6,11 @@ export const getUserList = async () => {
   return response;
 };
 
+export const getUserDetail = async id => {
+  const response = await authInstance.get(`/users/${id}`);
+  return response;
+};
+
 export const getUserAccounts = async userIdArray => {
   let urlString = '';
   userIdArray.forEach((item, index) => {
