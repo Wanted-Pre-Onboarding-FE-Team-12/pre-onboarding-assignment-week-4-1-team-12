@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getAccounts,
   getAccountStatus,
   getBrokers,
   getBrokerFormat,
   getUsers,
 } from '@store/modules/accountSlice';
-import { getAccountFilteringList } from '@api/accountApi';
+import { getAccounts } from '@api/accountApi';
 import AccountSubTitle from './AccountSubTitle';
 import AccountBankSelectOption from './AccountBankSelectOption';
 import AccountStatusSelectOption from './AccountStatusSelectOption';
 import AccountActiveSelectOption from './AccountActiveSelectOption';
 import AccountSearch from './AccountSearch';
+import PageButton from '@components/PageButton';
 import ListItem from './ListItem';
 import Layout from '@layout/index';
 import styled from 'styled-components';
@@ -21,10 +21,12 @@ const AccountList = () => {
   const dispatch = useDispatch();
   const [accounts, setAccounts] = useState([]);
   const { userList, accountStatusList, brokerList } = useSelector(({ account }) => account);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState('');
   const [filteringOption, setFilteringOption] = useState({
     selectBroker: '',
     selectAccountState: '',
-    selectAccountIsActive: false,
+    selectAccountIsActive: '',
     searchQuery: '',
   });
 
@@ -45,7 +47,12 @@ const AccountList = () => {
     return {};
   }, [accountStatusList]);
 
+  const handleChangeCurrentPage = number => {
+    setPage(number);
+  };
+
   const handleUpdateFilteringOption = (option, value) => {
+    setPage(1);
     setFilteringOption({ ...filteringOption, [option]: value });
   };
 
@@ -53,15 +60,21 @@ const AccountList = () => {
     const getData = async () => {
       try {
         const [response] = await Promise.all([
-          dispatch(getAccounts()),
+          getAccounts({ _page: page, _limit: 20 }),
           dispatch(getAccountStatus()),
           dispatch(getBrokers()),
           dispatch(getBrokerFormat()),
           dispatch(getUsers()),
         ]);
 
-        if (response.payload) {
-          setAccounts([...response.payload].splice(0, 20));
+        if (response) {
+          setAccounts([...response.data]);
+          const totalCount = response.headers['x-total-count'];
+          if (totalCount) {
+            setTotalPage(Math.ceil(parseInt(totalCount) / 20));
+          } else {
+            setPage(1);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -76,19 +89,28 @@ const AccountList = () => {
       broker_id: filteringOption.selectBroker,
       status: filteringOption.selectAccountState,
       is_active: filteringOption.selectAccountIsActive,
+      _page: page,
+      _limit: 20,
     };
 
-    const getFilteringData = async () => {
+    const getData = async () => {
       try {
-        let response = await getAccountFilteringList(query);
-        console.log(response);
-        setAccounts([...response]);
+        let response = await getAccounts(query);
+        if (response) {
+          setAccounts([...response.data]);
+          const totalCount = response.headers['x-total-count'];
+          if (totalCount) {
+            setTotalPage(Math.ceil(parseInt(totalCount) / 20));
+          } else {
+            setPage(1);
+          }
+        }
       } catch (error) {
         console.log(error);
       }
     };
-    getFilteringData();
-  }, [filteringOption]);
+    getData();
+  }, [filteringOption, page]);
 
   return (
     <Layout>
@@ -126,6 +148,12 @@ const AccountList = () => {
             accountStatusHashObj={accountStatusHashObj}
           />
         ))}
+        {/** page */}
+        <PageButton
+          totalPage={totalPage}
+          page={page}
+          handleChangeCurrentPage={handleChangeCurrentPage}
+        />
       </AccountListContainer>
     </Layout>
   );

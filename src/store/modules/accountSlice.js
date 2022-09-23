@@ -66,9 +66,6 @@ export const getUsers = createAsyncThunk('users/userList', async (_, { rejectWit
   }
 });
 
-// action
-// const accountList = createAction('accounts/accountList');
-
 const initialState = {
   accountList: [],
   accountStatusList: {},
@@ -79,8 +76,7 @@ const initialState = {
 
 const accountsReducer = createReducer(initialState, builder => {
   builder.addCase(getAccounts.fulfilled, (state, action) => {
-    const spliceData = action.payload.splice(0, 20);
-    state.accountList.push(spliceData);
+    state.accountList.push(action.payload);
   });
   builder.addCase(getAccounts.rejected, state => {
     state.accountList = [];

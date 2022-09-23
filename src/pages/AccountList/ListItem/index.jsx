@@ -1,8 +1,8 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { makeThousandSeparator, makeAccountNumberMasking } from '@utils/account';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
 
 /**
  * issue
@@ -42,7 +42,9 @@ const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
       <AccountInfo onClick={() => navigate(`/accounts/${id}`)}>
         {makeAccountNumberMasking(number) ?? '-'}
       </AccountInfo>
-      <p onClick={() => navigate(`/users/${user_id}`)}>{userIdHashObj[user_id] ?? '-'} </p>
+      <p onClick={() => navigate(`/users/${user_id}`)}>
+        {userIdHashObj[user_id] ?? '고객명 확인 필요'}
+      </p>
       <p>{accountStatusHashObj[status] ?? '-'}</p>
       <p>{name}</p>
       <p style={{ color: assetInfo }}>{makeThousandSeparator(assets)}</p>
@@ -61,8 +63,9 @@ const AccountListContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  height: 70px;
   padding: 1.5rem 2rem;
-  background-color: #efebe9;
+  background-color: #ede7f6;
   margin-bottom: 1.4rem;
   > * {
     flex-basis: 110px;

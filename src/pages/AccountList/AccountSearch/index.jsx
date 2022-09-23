@@ -10,7 +10,11 @@ const AccountSearch = ({ selectOptionKey, handleUpdateFilteringOption }) => {
   };
 
   const handleAccountSearchSubmit = e => {
-    handleUpdateFilteringOption(selectOptionKey, inputSearchValue);
+    if (!inputSearchValue) {
+      handleUpdateFilteringOption(selectOptionKey, '');
+    } else {
+      handleUpdateFilteringOption(selectOptionKey, inputSearchValue);
+    }
     e.preventDefault();
   };
 
