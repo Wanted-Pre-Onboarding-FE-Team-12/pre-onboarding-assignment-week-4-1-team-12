@@ -29,18 +29,18 @@ export const fetchUsers = createAsyncThunk('account/fetchUsers', async () => {
   }
 });
 export const fetchAccountStatus = createAsyncThunk('account/fetchAccountStatus', async () => {
-    try {
-      const response = await getAccountStatus();
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return error.response;
-    }
-  });
+  try {
+    const response = await getAccountStatus();
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error.response;
+  }
+});
 
 const accountSlice = createSlice({
   name: 'accountList',
-  initialState: { entities: [], brockers: [], users: [], accountStatus:[], loading: 'idle' },
+  initialState: { entities: [], brockers: [], users: [], accountStatus: [], loading: 'idle' },
   reducers: {
     //행동
     setAccountList(state, action) {},
@@ -63,8 +63,8 @@ const accountSlice = createSlice({
       state.users.push(action.payload);
     });
     builder.addCase(fetchAccountStatus.fulfilled, (state, action) => {
-        state.accountStatus.push(action.payload);
-      });
+      state.accountStatus.push(action.payload);
+    });
   },
 });
 

@@ -1,19 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 
 const AccountItem = ({ account, brockers, users, accountStatus }) => {
   const {
-    //id, //그냥 아이디
     user_id,
-    //uuid, // 이거 참조해서 user_name나와야함.
-    broker_id, // brockers.json으로 브로커명 보여야함
-    status, //운용중, accountStatus.json 를 참조하여 실제 이름으로 보여져야 합니다.
-    number, //앞 뒤 각각 두글자를 제외하고 나머지는 글자수에 맞게 * 글자로 마스킹 처리가 필요합니다.
+    broker_id, 
+    status, 
+    number,
     name,
     assets,
     payments,
     is_active,
     created_at,
-    //updated_at
   } = account;
 
   function applyCommas(number) {
@@ -32,12 +30,12 @@ const AccountItem = ({ account, brockers, users, accountStatus }) => {
     });
     return result.name;
   }
-  function setAccountStatus(status){
-    const result = Object.entries(accountStatus).find(st=> st[1] === status)
-    return result[0]
+  function setAccountStatus(status) {
+    const result = Object.entries(accountStatus).find(st => st[1] === status);
+    return result[0];
   }
   return (
-    <tr>
+    <AccountRow>
       <td>{setUserName(user_id)}</td>
       <td>{brockers[broker_id]}</td>
       <td>{accountNumberMasking(number)}</td>
@@ -47,8 +45,18 @@ const AccountItem = ({ account, brockers, users, accountStatus }) => {
       <td>{applyCommas(payments)}</td>
       <td>{is_active ? '✅' : '⛔'}</td>
       <td>{remainDate(created_at)}</td>
-    </tr>
+    </AccountRow>
   );
 };
 
 export default AccountItem;
+
+const AccountRow = styled.tr`
+    font-size: 1.5rem;
+    
+    td {
+        padding: 2rem 0;
+        text-align:center;
+        border-bottom: 1px solid grey;
+    }
+`;
