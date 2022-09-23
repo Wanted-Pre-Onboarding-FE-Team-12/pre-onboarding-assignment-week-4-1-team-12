@@ -26,7 +26,7 @@ const AccountsList = props => {
   const [accountInfo, setAccountInfo] = useState([]);
 
   useEffect(() => {
-    getDetailAccount(3).then(res => {
+    getDetailAccount().then(res => {
       const result = res.data.filter(el => el.user_id === parseInt(props.userId));
       setAccountInfo(result);
     });
