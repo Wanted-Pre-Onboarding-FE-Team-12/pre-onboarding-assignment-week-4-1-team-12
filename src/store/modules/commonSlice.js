@@ -19,6 +19,7 @@ const commonSlice = createSlice({
       state.isSidebarOpen = true;
       setSideBarStatus(true);
     },
+
     sidebarClose(state) {
       const isOpen = getSideBarStatus();
       if (isOpen) {
