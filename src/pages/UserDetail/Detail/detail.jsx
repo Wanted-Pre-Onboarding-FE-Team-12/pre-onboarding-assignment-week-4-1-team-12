@@ -6,31 +6,34 @@ import styled from 'styled-components';
 import Description from '../Description/description';
 import * as S from '../Description/description';
 import { INITAL_USER_DETAIL_INFO } from '@utils/INITIAL_USER_DETAIL_INFO';
-import { INITIAL_USER_DATA } from '../../../utils/INITIAL_USER_DATA';
+// import { INITIAL_USER_DATA } from '../../../utils/INITIAL_USER_DATA';
 
 const Detail = ({ userId }) => {
-  const [userDetailInfo, setUserDetailInfo] = useState(INITIAL_USER_DATA);
+  // const [userDetailInfo, setUserDetailInfo] = useState(INITIAL_USER_DATA);
   const [detailList, setDetailList] = useState([]);
 
   useEffect(() => {
     getUserDetail(userId).then(res => {
-      setUserDetailInfo(res.data);
+      const value = Object.keys(INITAL_USER_DETAIL_INFO).map(el => {
+        const result = INITAL_USER_DETAIL_INFO[el];
+        result.value = res.data[el];
+        return result;
+      });
+      setDetailList(value);
+      // setUserDetailInfo(res.data);
     });
-
-    const value = Object.keys(INITAL_USER_DETAIL_INFO).map(el => {
-      const result = INITAL_USER_DETAIL_INFO[el];
-      result.value = userDetailInfo[el];
-      return result;
-    });
-    setDetailList(value);
   }, []);
 
   const dateHandle = date => {
-    let year = date.slice(0, 4);
-    let month = date.slice(5, 7);
-    let day = date.slice(8, 10);
-    let total = `${year}년 ${month}월 ${day}일`;
-    return total;
+    try {
+      let year = date.slice(0, 4);
+      let month = date.slice(5, 7);
+      let day = date.slice(8, 10);
+      let total = `${year}년 ${month}월 ${day}일`;
+      return total;
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (

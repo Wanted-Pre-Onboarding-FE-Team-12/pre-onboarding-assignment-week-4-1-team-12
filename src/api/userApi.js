@@ -73,3 +73,8 @@ export const deleteUser = async id => {
   const response = await authInstance.delete(`/users/${id}`);
   return response;
 };
+
+export const getDetailAccount = async () => {
+  const response = await authInstance.get(`/accounts`);
+  return response;
+};
