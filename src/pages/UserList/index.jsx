@@ -1,3 +1,4 @@
+// import React, { useEffect } from 'react';
 import React from 'react';
 import Layout from '@layout/index';
 import AllUserList from './Components/AllUserList';
@@ -5,6 +6,7 @@ import ActiveUserList from './Components/ActiveUserList';
 import StaffUserList from './Components/StaffUserList';
 import SearchUserList from './Components/SearchUserList';
 import UserSearch from './Components/UserSearch';
+// import { getUser } from '@store/modules/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSlice } from '@store/modules/userSlice';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +16,11 @@ function UserList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const select = useSelector(state => state.userList.text);
+  // const updateList = useSelector(state => state.userList.updated);
+
+  // useEffect(() => {
+  //   dispatch(getUser());
+  // }, [updateList]);
 
   return (
     <Layout>

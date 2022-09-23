@@ -103,8 +103,8 @@ const ActiveUserList = () => {
       {activeUserList?.slice(offset, offset + limit).map(user => {
         const findSetting = userSetting.find(item => item.uuid === user.uuid);
         return (
-          <BodyContainer key={user.id} onClick={() => navigate(`/users/${user.id}`)}>
-            <p>{maskingName(user.name)}</p>
+          <BodyContainer key={user.id}>
+            <p onClick={() => navigate(`/users/${user.id}`)}>{maskingName(user.name)}</p>
             <p>{userAccount ? userAccount.filter(item => item.user_id === user.id).length : 0}</p>
             <p>{user.email}</p>
             <p>{user.gender_origin}</p>
