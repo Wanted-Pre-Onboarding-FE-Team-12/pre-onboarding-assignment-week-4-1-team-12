@@ -21,6 +21,8 @@ const PageButton = ({ totalPage, page, handleChangeCurrentPage }) => {
 export default PageButton;
 
 const PageContainer = styled.div`
+  display: flex;
+  justify-content: center;
   width: 100%;
-  background-color: pink;
+  margin-top: 5rem;
 `;

@@ -25,9 +25,10 @@ const AccountSubTitleContainer = styled.div`
   width: 100%;
   padding: 1rem 2rem;
   background-color: #a094b7;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-size: 16px;
   font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   > * {
     text-align: center;
     flex-basis: 110px;

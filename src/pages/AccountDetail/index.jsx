@@ -6,6 +6,10 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { makeThousandSeparator } from '@utils/account';
 
+/**
+ * issue
+ * account의 id가 고유하지 않은 값 같음 (중복되는 id가 많아서 계좌 id를 넘겨도 정보가 일치하지 않음)
+ */
 const AccountDetail = () => {
   const location = useLocation();
   const accountId = +location.pathname.split('/')[2];
@@ -78,10 +82,9 @@ const AccountDetail = () => {
           <span>입금 금액</span>
           <span>{makeThousandSeparator(payments)}</span>
         </div>
-
         <div>
           <span>계좌 활성화 여부</span>
-          <span>{is_active}</span>
+          <span>{is_active ? '활성화' : '비활성화'}</span>
         </div>
         <div>
           <span>계좌 계설일</span>

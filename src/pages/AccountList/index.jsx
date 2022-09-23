@@ -16,6 +16,8 @@ import PageButton from '@components/PageButton';
 import ListItem from './ListItem';
 import Layout from '@layout/index';
 import styled from 'styled-components';
+import useToastMessage from '@hooks/useToastMessage';
+import { TOAST_MESSAGE } from '@utils/toastMessage';
 
 const AccountList = () => {
   const dispatch = useDispatch();
@@ -56,6 +58,10 @@ const AccountList = () => {
     setFilteringOption({ ...filteringOption, [option]: value });
   };
 
+  const AlertErrorMessage = () => {
+    useToastMessage(TOAST_MESSAGE.ACCOUNT.FAILED_TO_GET_LIST, 'error');
+  };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -77,7 +83,7 @@ const AccountList = () => {
           }
         }
       } catch (error) {
-        console.log(error);
+        AlertErrorMessage();
       }
     };
     getData();
@@ -106,7 +112,7 @@ const AccountList = () => {
           }
         }
       } catch (error) {
-        console.log(error);
+        AlertErrorMessage();
       }
     };
     getData();
@@ -148,7 +154,6 @@ const AccountList = () => {
             accountStatusHashObj={accountStatusHashObj}
           />
         ))}
-        {/** page */}
         <PageButton
           totalPage={totalPage}
           page={page}

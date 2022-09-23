@@ -12,6 +12,7 @@ import styled from 'styled-components';
 const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
   const { broker_id, id, user_id, status, number, name, assets, payments, is_active, created_at } =
     account;
+  console.log(account);
   const navigate = useNavigate();
   const { brokerList } = useSelector(({ account }) => account);
   const [assetInfo, setAssetInfo] = useState('');
@@ -67,6 +68,7 @@ const AccountListContainer = styled.div`
   padding: 1.5rem 2rem;
   background-color: #ede7f6;
   margin-bottom: 1.4rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   > * {
     flex-basis: 110px;
     width: 110px;
