@@ -24,7 +24,7 @@ function App() {
         <Route path="/users" element={<UserList />} />
         <Route path="/users/:userId" element={<UserDetail />} />
         <Route path="/accounts" element={<AccountList />} />
-        <Route path="/accounts/:accountId" element={<AccountDetail />} />
+        <Route path="/accounts/:accountId/:userId" element={<AccountDetail />} />
       </Routes>
     </>
   );

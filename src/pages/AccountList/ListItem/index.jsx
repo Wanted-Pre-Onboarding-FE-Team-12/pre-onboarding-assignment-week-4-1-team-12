@@ -43,7 +43,7 @@ const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
   return (
     <AccountListContainer>
       <p>{brokerList[broker_id] ?? '-'}</p>
-      <AccountInfo onClick={() => navigate(`/accounts/${id}`)}>
+      <AccountInfo onClick={() => navigate(`/accounts/${id}/${user_id}`)}>
         {makeAccountNumberMasking(number) ?? '-'}
       </AccountInfo>
       <p onClick={() => navigate(`/users/${user_id}`)}>

@@ -7,13 +7,11 @@ import Layout from '@layout/index';
 import styled from 'styled-components';
 import Loading from '@components/Loading';
 
-/**
- * issue
- * account의 id가 고유하지 않은 값 같음 (중복되는 id가 많아서 계좌 id를 넘겨도 정보가 일치하지 않음)
- */
+
 const AccountDetail = () => {
   const location = useLocation();
   const accountId = +location.pathname.split('/')[2];
+  const userId = +location.pathname.split('/')[3];
   const [isLoading, setIsLoading] = useState(true);
   const { userList, accountStatusList, brokerList, brokerFormatList } = useSelector(
     ({ account }) => account,
@@ -22,7 +20,6 @@ const AccountDetail = () => {
   const {
     assets,
     payments,
-    id,
     is_active,
     broker_id,
     name,
@@ -64,9 +61,9 @@ const AccountDetail = () => {
   useEffect(() => {
     const getAccountDetailData = async () => {
       try {
-        const payload = await getAccountDetail(accountId);
+        const payload = await getAccountDetail(accountId, userId);
         if (payload) {
-          setAccount({ ...payload });
+          setAccount({ ...payload[0] });
           setIsLoading(false);
           setBrokerFormatStr(brokerFormatList[0][parseInt(broker_id)]);
         }
@@ -94,7 +91,7 @@ const AccountDetail = () => {
           </div>
           <div>
             <ColumnTitle>고객 이름</ColumnTitle>
-            <ColumnContent>{accountUserIdHashObj[id] ?? '고객명 오류 확인 필요'}</ColumnContent>
+            <ColumnContent>{accountUserIdHashObj[userId] ?? '고객명 오류 확인 필요'}</ColumnContent>
           </div>
         </div>
         <div>
