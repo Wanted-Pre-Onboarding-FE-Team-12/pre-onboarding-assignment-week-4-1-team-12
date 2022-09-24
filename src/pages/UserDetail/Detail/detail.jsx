@@ -1,15 +1,15 @@
-import { getUserDetail } from '@api/userApi';
 import React, { useState, useEffect } from 'react';
-import { Descriptions } from 'antd';
-import 'antd/dist/antd.css';
 import styled from 'styled-components';
+import { Descriptions } from 'antd';
+
+import { getUserDetail } from '@api/userApi';
 import Description from '../Description/description';
-import * as S from '../Description/description';
 import { INITAL_USER_DETAIL_INFO } from '@utils/INITIAL_USER_DETAIL_INFO';
-// import { INITIAL_USER_DATA } from '../../../utils/INITIAL_USER_DATA';
+
+// CSS
+import * as S from '../Description/description';
 
 const Detail = ({ userId }) => {
-  // const [userDetailInfo, setUserDetailInfo] = useState(INITIAL_USER_DATA);
   const [detailList, setDetailList] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,6 @@ const Detail = ({ userId }) => {
         return result;
       });
       setDetailList(value);
-      // setUserDetailInfo(res.data);
     });
   }, []);
 
@@ -80,18 +79,5 @@ const Detail = ({ userId }) => {
 export default Detail;
 
 const DetailWrap = styled.div`
-  margin: 130px 0;
+  margin: 10rem 0;
 `;
-
-// const DESCRIPTION_CATEGORIES = [
-//   '이름',
-//   '성별',
-//   '생년월일',
-//   '이메일',
-//   '최근 접속',
-//   '전화번호',
-//   '나이',
-//   '주소',
-//   '가입일',
-//   '상세주소',
-// ];

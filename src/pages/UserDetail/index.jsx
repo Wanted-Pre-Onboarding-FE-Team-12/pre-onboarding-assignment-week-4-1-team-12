@@ -1,8 +1,9 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+
 import Layout from '@layout/index';
 import Detail from './Detail/detail';
 import AccountList from '@pages/UserDetail/AccountsList/accountsList';
-import { useParams } from 'react-router-dom';
 
 const UserDetail = () => {
   const params = useParams();

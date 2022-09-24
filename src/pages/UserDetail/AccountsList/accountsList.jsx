@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'antd';
-import 'antd/dist/antd.css';
 import styled from 'styled-components';
+import { Card } from 'antd';
 
-import { getAccountList } from '../../../api/accountApi';
+import { getAccountList } from '@api/accountApi';
 
 const gridStyle = {
-  width: '33%',
+  width: '33.3%',
   textAlign: 'center',
 };
 
 const AccountsList = props => {
-  // const dispatch = useDispatch();
-  // const { account } = useSelector(state => {
-  //   console.log('state ', state?.user.users);
-  //   return state.user;
-  // });
-  // const filteredValue = account.filter(({ user_id }) => user_id === props.userId);
-  // console.log('account ', account);
-
-  // useEffect(() => {
-  //   dispatch(getDetailAccount());
-  // }, []);
   const [accountInfo, setAccountInfo] = useState([]);
 
   useEffect(() => {
@@ -32,22 +20,20 @@ const AccountsList = props => {
   }, []);
 
   return (
-    <>
-      <Card title="계좌 목록">
-        {accountInfo?.map(account => {
-          let assets = (account.assets * 1).toLocaleString('ko-KR');
+    <Card title="계좌 목록">
+      {accountInfo?.map(account => {
+        let assets = (account.assets * 1).toLocaleString('ko-KR');
 
-          return (
-            <Card.Grid style={gridStyle} key={account.id}>
-              <AccountsWrap>
-                <AccountTitle>{account.name}</AccountTitle>
-              </AccountsWrap>
-              <AccountAssets>{assets}원</AccountAssets>
-            </Card.Grid>
-          );
-        })}
-      </Card>
-    </>
+        return (
+          <Card.Grid style={gridStyle} key={account.id}>
+            <AccountsWrap>
+              <AccountTitle>{account.name}</AccountTitle>
+            </AccountsWrap>
+            <AccountAssets>{assets}원</AccountAssets>
+          </Card.Grid>
+        );
+      })}
+    </Card>
   );
 };
 
@@ -60,6 +46,6 @@ const AccountTitle = styled.div`
   font-weight: 500;
 `;
 
-const AccountAssets = styled(AccountTitle)`
+const AccountAssets = styled.div`
   font-size: 20px;
 `;
