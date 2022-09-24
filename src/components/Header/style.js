@@ -34,8 +34,10 @@ export const HeaderWrapper = styled.header`
   }
 
   .admin-menu {
+    margin-top: 1rem;
     position: absolute;
     padding: 0.5rem 1rem;
+    background: #fff;
     top: 25px;
     min-height: 8rem;
     border: 1px solid #ccc;
