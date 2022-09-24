@@ -10,10 +10,12 @@ import { useNavigate } from 'react-router-dom';
 const AllUserList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userList = useSelector(state => state.userList.users);
-  const userAccount = useSelector(state => state.userList.account);
-  const userSetting = useSelector(state => state.userList.userSetting);
-  const updateList = useSelector(state => state.userList.updated);
+  const { userList, userAccount, userSetting, updateList } = useSelector(state => ({
+    userList: state.userList.users,
+    userAccount: state.userList.account,
+    userSetting: state.userList.userSetting,
+    updateList: state.userList.updated,
+  }));
 
   const limit = 10;
   const [page, setPage] = useState(1);

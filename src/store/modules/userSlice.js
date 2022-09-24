@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as userApi from '@api/userApi';
 
-
-// export const getUser = createAsyncThunk('users', async () => {
-//   const response = await userApi.getUserList();
-//   return response.data;
-// });
-
-
 export const getUser = createAsyncThunk('users', async () => {
   const response = await userApi.getUserList();
   return response.data;
@@ -54,8 +47,6 @@ export const userSlice = createSlice({
     searchUser: [],
     updated: false,
   },
-
-
 
   reducers: {
     select(state, action) {

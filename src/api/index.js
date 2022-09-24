@@ -1,5 +1,5 @@
-import { getAccessToken } from '@utils/storage/token';
 import axios from 'axios';
+import { getAccessToken } from '@utils/storage/token';
 
 export const instance = axios.create({
   baseURL: 'https://fint-api.herokuapp.com',
@@ -8,10 +8,18 @@ export const instance = axios.create({
   },
 });
 
-export const authInstance = axios.create({
-  baseURL: 'https://fint-api.herokuapp.com',
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${getAccessToken()}`,
+instance.interceptors.request.use(
+  config => {
+    const accessToken = getAccessToken();
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+      return config;
+    }
+    return config;
   },
-});
+  error => {
+    console.log(error, 'error');
+    return;
+  },
+);

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { useDispatch } from 'react-redux';
-import { loadUser } from '@store/modules/authSlice';
+import { LoadUser } from '@store/modules/authSlice';
 
 const Login = loadable(() => import('@pages/Login'));
 const AccountList = loadable(() => import('@pages/AccountList'));
@@ -18,7 +18,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadUser());
+    dispatch(LoadUser());
   }, [dispatch]);
 
   return (

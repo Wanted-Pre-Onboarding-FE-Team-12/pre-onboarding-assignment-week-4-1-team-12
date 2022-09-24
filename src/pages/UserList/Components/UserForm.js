@@ -13,12 +13,12 @@ function UserForm() {
   const dispatch = useDispatch();
   const name = useTypedInput('');
   const password = useTypedInput('');
-  const photo = useTypedInput(-1);
+  const photo = useTypedInput(0);
   const email = useTypedInput('');
-  const age = useTypedInput(-1);
+  const age = useTypedInput(1);
   const address = useTypedInput('');
   const detail = useTypedInput('');
-  const gender = useTypedInput(-1);
+  const gender = useTypedInput(0);
   const birth = useTypedInput('');
   const phoneNumber = useTypedInput('');
   const allowMarketing = useTypedInput(false);
@@ -47,7 +47,7 @@ function UserForm() {
     return {
       name: name.value,
       password: password.value,
-      photo: photo.value,
+      photo: `https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/${photo.value}.jpg`,
       email: email.value,
       age: age.value,
       address: address.value,
