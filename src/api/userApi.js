@@ -75,14 +75,7 @@ export const deleteUser = async id => {
   return response;
 };
 
-
-export const getDetailAccount = async () => {
-  const response = await authInstance.get(`/accounts`);
-  return response;
-};
-
 // export const getUserList = async () => {
 //   const response = await instance.get('/users');
 //   return response;
 // };
-

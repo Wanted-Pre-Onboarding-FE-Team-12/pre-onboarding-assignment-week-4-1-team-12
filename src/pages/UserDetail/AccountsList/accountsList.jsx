@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'antd';
-
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-// import { useDispatch, useSelector } from 'react-redux';
-import { getDetailAccount } from '../../../api/userApi';
+
+import { getAccountList } from '../../../api/accountApi';
 
 const gridStyle = {
   width: '33%',
@@ -26,7 +25,7 @@ const AccountsList = props => {
   const [accountInfo, setAccountInfo] = useState([]);
 
   useEffect(() => {
-    getDetailAccount().then(res => {
+    getAccountList().then(res => {
       const result = res.data.filter(el => el.user_id === parseInt(props.userId));
       setAccountInfo(result);
     });
