@@ -8,11 +8,6 @@ import {
 } from '@utils/account';
 import styled from 'styled-components';
 
-/**
- * issue
- * api 명세서가 없어서 unique key를 id라 생각해서 디테일 페이지에 id를 넘겨주는데 id가 unique한 값이 아닌 거 같음
- * account list에 중복되는 id가 많음
- */
 const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
   const { broker_id, id, user_id, status, number, name, assets, payments, is_active, created_at } =
     account;

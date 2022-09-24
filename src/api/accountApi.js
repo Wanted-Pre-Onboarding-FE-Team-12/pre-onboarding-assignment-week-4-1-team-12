@@ -27,7 +27,6 @@ export const getBrokerFormatList = async () => {
 
 /** account detail */
 export const getAccountDetail = async (id, user_id) => {
-  console.log(id, user_id)
   const response = await instance.get(`/accounts/?id=${id}&user_id=${user_id}`);
   return response.data;
 };

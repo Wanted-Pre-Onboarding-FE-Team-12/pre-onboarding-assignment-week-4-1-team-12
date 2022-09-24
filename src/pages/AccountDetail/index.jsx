@@ -7,7 +7,6 @@ import Layout from '@layout/index';
 import styled from 'styled-components';
 import Loading from '@components/Loading';
 
-
 const AccountDetail = () => {
   const location = useLocation();
   const accountId = +location.pathname.split('/')[2];
@@ -17,17 +16,8 @@ const AccountDetail = () => {
     ({ account }) => account,
   );
   const [account, setAccount] = useState([]);
-  const {
-    assets,
-    payments,
-    is_active,
-    broker_id,
-    name,
-    number,
-    status,
-    created_at,
-    updated_at,
-  } = account;
+  const { assets, payments, is_active, broker_id, name, number, status, created_at, updated_at } =
+    account;
   const [brokerFormatStr, setBrokerFormatStr] = useState('');
 
   const accountUserIdHashObj = useMemo(() => {
