@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getAccessToken } from '@utils/storage/token';
 
 export const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: 'https://fint-api.herokuapp.com',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -11,7 +11,6 @@ export const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     const accessToken = getAccessToken();
-    console.log(accessToken);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

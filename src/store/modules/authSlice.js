@@ -18,6 +18,7 @@ const initialState = {
 export const login = createAsyncThunk('auth/login', async (formData, { rejectWithValue }) => {
   try {
     const response = await authApi.signin(formData);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response);
