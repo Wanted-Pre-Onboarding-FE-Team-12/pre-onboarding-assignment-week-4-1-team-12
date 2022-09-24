@@ -1,33 +1,33 @@
 import queryString from 'query-string';
-import { authInstance } from './index';
+import { instance } from './index';
 
 /** account list */
 export const getAccountList = async () => {
-  const response = await authInstance.get('/accounts');
+  const response = await instance.get('/accounts');
   return response;
 };
 
 /** account status */
 export const getAccountStatusList = async () => {
-  const response = await authInstance.get('/accountStatus');
+  const response = await instance.get('/accountStatus');
   return response;
 };
 
 /** broker list */
 export const getBrokerList = async () => {
-  const response = await authInstance.get('/brokers');
+  const response = await instance.get('/brokers');
   return response;
 };
 
 /** broker format */
 export const getBrokerFormatList = async () => {
-  const response = await authInstance.get('/brokerFormat');
+  const response = await instance.get('/brokerFormat');
   return response;
 };
 
 /** account detail */
 export const getAccountDetail = async id => {
-  const response = await authInstance.get(`/accounts/${id}`);
+  const response = await instance.get(`/accounts/${id}`);
   return response.data;
 };
 
@@ -41,6 +41,6 @@ export const getAccountDetail = async id => {
  * */
 export const getAccounts = async query => {
   const queryStr = queryString.stringify(query, { skipEmptyString: true, skipNull: true });
-  const response = await authInstance.get(`/accounts?${queryStr}`);
+  const response = await instance.get(`/accounts?${queryStr}`);
   return response;
 };
