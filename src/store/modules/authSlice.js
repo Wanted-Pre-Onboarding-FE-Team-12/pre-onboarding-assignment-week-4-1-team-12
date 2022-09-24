@@ -29,24 +29,27 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loadUser(state) {
+    LoadUser(state) {
       const token = getAccessToken();
 
       if (token) {
-        const user = jwtDecode(token);
-        return {
-          ...state,
-          token,
-          email: user.email,
-          _id: +user.sub,
-          userLoaded: true,
-          isLoggedIn: true,
-        };
+        const { email, sub } = jwtDecode(token);
+        state.token = token;
+        state.email = email;
+        state._id = +sub;
+        state.userLoaded = true;
+        state.isLoggedIn = true;
       }
     },
 
-    logout() {
+    Logout(state) {
       removeAccessToken();
+      state.token = null;
+      state.email = '';
+      state._id = '';
+      state.isLoggedIn = false;
+      state.userLoaded = false;
+      useToastMessage(TOAST_MESSAGE.AUTH.LOGOUT_SUCCESS, 'warning');
     },
   },
   extraReducers: builder => {
@@ -55,7 +58,14 @@ const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.fetchLoginState = 'SUCCESS';
+      state.token = action.payload.accessToken;
+
+      const { email, sub } = jwtDecode(action.payload.accessToken);
+      state.email = email;
+      state._id = +sub;
+      state.userLoaded = true;
       state.isLoggedIn = true;
+
       setAccessToken(action.payload.accessToken);
       useToastMessage(TOAST_MESSAGE.AUTH.LOGIN_SUCCESS, 'success');
     });
@@ -66,5 +76,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { loadUser, logout } = authSlice.actions;
+export const { LoadUser, Logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -6,4 +6,8 @@ export const TOAST_MESSAGE = {
     ONLY_LOGIN: '로그인하고 이용해 주세요.',
     INVALID_LOGIN: '로그인 정보가 올바르지 않습니다',
   },
+  ACCOUNT: {
+    SUCCESS_TO_GET_LIST: '계좌 목록을 가져왔습니다.',
+    FAILED_TO_GET_LIST: '계좌 목록을 가져오는데 문제가 발생하였습니다.',
+  },
 };

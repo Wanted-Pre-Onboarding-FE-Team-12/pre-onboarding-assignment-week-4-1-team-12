@@ -16,11 +16,13 @@ import Pagination from '@pages/UserList/Components/Pagination';
 const ActiveUserList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userList = useSelector(state => state.userList.users);
-  const userAccount = useSelector(state => state.userList.account);
-  const userSetting = useSelector(state => state.userList.userSetting);
-  const activeUser = useSelector(state => state.userList.activeUser);
-  const updateList = useSelector(state => state.userList.updated);
+  const { userList, userAccount, userSetting, updateList, activeUser } = useSelector(state => ({
+    userList: state.userList.users,
+    userAccount: state.userList.account,
+    userSetting: state.userList.userSetting,
+    updateList: state.userList.updated,
+    activeUser: state.userList.activeUser,
+  }));
 
   const limit = 10;
   const [page, setPage] = useState(1);

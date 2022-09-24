@@ -16,11 +16,14 @@ import {
 const StaffUserList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userList = useSelector(state => state.userList.users);
-  const userAccount = useSelector(state => state.userList.account);
-  const userSetting = useSelector(state => state.userList.userSetting);
-  const staffUser = useSelector(state => state.userList.staffUser);
-  const updateList = useSelector(state => state.userList.updated);
+
+  const { userList, userAccount, userSetting, staffUser, updateList } = useSelector(state => ({
+    userList: state.userList.users,
+    userAccount: state.userList.account,
+    userSetting: state.userList.userSetting,
+    staffUser: state.userList.staffUser,
+    updateList: state.userList.updated,
+  }));
 
   const limit = 10;
   const [page, setPage] = useState(1);

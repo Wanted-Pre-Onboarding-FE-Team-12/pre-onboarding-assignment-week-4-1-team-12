@@ -16,24 +16,21 @@ export default createGlobalStyle`
 
   body {
     --bgColor: ${props => props.theme.colors.primary7};
+    --textColor: ${props => props.theme.colors.primary1};
+    --white: ${props => props.theme.colors.primary8};
+    --lightblue: ${props => props.theme.colors.primary5};
+    --lightblue2: ${props => props.theme.colors.primary6};
+    --darkblue: ${props => props.theme.colors.primary4};
+    --neonBlue: ${props => props.theme.colors.neonBlue};
     margin: 0;
     background: var(--bgColor);
     color: var(--textColor);
     font-family: "Noto Sans KR";
   }
 
-  article,
-  footer,
-  header,
-  main,
-  nav {
-    display: block;
-  }
-
   a {
     color: inherit;
     text-decoration: none;
-    transition: .2s;
     :focus{
       outline: none;
     }
@@ -43,7 +40,8 @@ export default createGlobalStyle`
     outline: 0;
   }
 
-  ul{
+  ul,
+  li{
     list-style:none;
   }
 `;
