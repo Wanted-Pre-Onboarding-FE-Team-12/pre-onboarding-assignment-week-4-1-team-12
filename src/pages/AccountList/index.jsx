@@ -127,8 +127,6 @@ const AccountList = () => {
     getData();
   }, [filteringOption, page]);
 
-  if (isLoading) return <Loading />;
-
   return (
     <Layout>
       <AccountListContainer>
@@ -157,6 +155,7 @@ const AccountList = () => {
           </div>
         </OptionContainerBox>
         <AccountSubTitle />
+        {isLoading && <Loading />}
         {accounts?.map((account, idx) => (
           <ListItem
             key={idx}
