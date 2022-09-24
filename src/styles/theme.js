@@ -17,7 +17,7 @@ const variables = {
     maxWidth: '1100px',
   },
   sideSpace: {
-    large: '2rem',
+    large: '6rem',
     small: '1rem',
     contentLarge: '4rem',
     contentSmall: '2rem',
