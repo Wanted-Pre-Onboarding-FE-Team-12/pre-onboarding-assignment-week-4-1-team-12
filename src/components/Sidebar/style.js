@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 export const SidebarWrapper = styled.div`
   display: grid;
-  grid-template-rows: 10rem 1fr 10rem;
+  grid-template-rows: 10rem 1fr;
   padding: 3rem 0 2rem;
   width: ${props => (props.isOpen ? '30rem' : '8rem')};
   height: 100%;
-  background: ${props => props.theme.colors.primary6};
+  background: #efebe9;
   color: #fff;
   transition: width 0.2s ease-in;
+
   .underline {
     width: 100%;
     height: 1px;
@@ -22,11 +23,12 @@ export const SidebarTop = styled.div`
   position: relative;
   margin: 1rem 0;
   padding: 0 1.5rem;
+
   .logo {
     display: inline-block;
     width: 50px;
     height: 50px;
-    background: ${props => props.theme.colors.primary4};
+    background: #777;
     line-height: 50px;
     overflow: hidden;
     svg {
@@ -51,18 +53,5 @@ export const SidebarTop = styled.div`
 `;
 
 export const SidebarMenu = styled.div`
-  padding-right: 15px;
-`;
-
-export const SidebarBottom = styled.div`
-  padding: 0 15px;
-
-  .logout-btn {
-    padding: 5px;
-    padding-left: 0;
-    &.active {
-      background: var(--lightblue);
-      border-radius: 14px;
-    }
-  }
+  padding-right: 10px;
 `;

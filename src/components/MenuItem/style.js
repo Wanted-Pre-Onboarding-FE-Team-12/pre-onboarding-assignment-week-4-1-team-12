@@ -19,7 +19,7 @@ export const ItemContainer = styled.li`
 
   .link {
     &.active {
-      background: var(--neonBlue);
+      background: #b5a8a2;
     }
   }
 
