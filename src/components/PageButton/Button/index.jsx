@@ -4,7 +4,7 @@ const Button = ({ page, pageLabel, handleChangeCurrentPage }) => {
   return (
     <PageButton
       onClick={() => handleChangeCurrentPage(pageLabel)}
-      style={{ backgroundColor: page === pageLabel ? '#9499b7' : '#e8eaf6' }}
+      style={{ backgroundColor: page === pageLabel ? '#777' : '#d7ccc8' }}
     >
       {pageLabel}
     </PageButton>

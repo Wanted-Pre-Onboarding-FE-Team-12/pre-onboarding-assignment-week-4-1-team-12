@@ -24,7 +24,7 @@ const AccountSubTitleContainer = styled.div`
   justify-content: space-around;
   width: 100%;
   padding: 1rem 2rem;
-  background-color: #a094b7;
+  background: ${props => props.theme.colors.primary3};
   margin-bottom: 2rem;
   font-size: 16px;
   font-weight: bold;
