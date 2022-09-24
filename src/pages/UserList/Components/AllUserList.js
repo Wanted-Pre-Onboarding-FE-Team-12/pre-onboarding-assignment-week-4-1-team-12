@@ -89,7 +89,9 @@ const AllUserList = () => {
         const findSetting = userSetting.find(item => item.uuid === user.uuid);
         return (
           <BodyContainer key={user.id}>
-            <p onClick={() => navigate(`/users/${user.id}`)}>{maskingName(user.name)}</p>
+            <p className="user-name" onClick={() => navigate(`/users/${user.id}`)}>
+              {maskingName(user.name)}
+            </p>
             <p>{userAccount ? userAccount.filter(item => item.user_id === user.id).length : 0}</p>
             <p>{user.email}</p>
             <p>{user.gender_origin}</p>
@@ -159,6 +161,17 @@ const BodyContainer = styled.div`
     width: 100px;
     text-align: center;
     margin: 1rem;
+  }
+
+  .user-name {
+    color: #607d8b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover {
+      transform-origin: 50%, 50%;
+      transform: scale(1.03);
+    }
   }
 `;
 

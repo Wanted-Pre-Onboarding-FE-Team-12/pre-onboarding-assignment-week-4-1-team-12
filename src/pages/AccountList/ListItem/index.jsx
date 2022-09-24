@@ -41,7 +41,7 @@ const ListItem = ({ account, userIdHashObj, accountStatusHashObj }) => {
       <AccountInfo onClick={() => navigate(`/accounts/${id}/${user_id}`)}>
         {makeAccountNumberMasking(number) ?? '-'}
       </AccountInfo>
-      <p onClick={() => navigate(`/users/${user_id}`)}>
+      <p className="user-name" onClick={() => navigate(`/users/${user_id}`)}>
         {userIdHashObj[user_id] ?? '고객명 확인 필요'}
       </p>
       <p>{accountStatusHashObj[status] ?? '-'}</p>
@@ -64,7 +64,7 @@ const AccountListContainer = styled.div`
   width: 100%;
   height: 70px;
   padding: 1.5rem 2rem;
-  background-color: #ede7f6;
+  background-color: ${props => props.theme.colors.primary8};
   margin-bottom: 1.4rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 10px;
@@ -74,8 +74,26 @@ const AccountListContainer = styled.div`
     text-align: center;
     font-size: 14px;
   }
+
+  .user-name {
+    color: #607d8b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover {
+      transform-origin: 50%, 50%;
+      transform: scale(1.03);
+    }
+  }
 `;
 
 const AccountInfo = styled.p`
   color: #607d8b;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    transform-origin: 50%, 50%;
+    transform: scale(1.03);
+  }
 `;
