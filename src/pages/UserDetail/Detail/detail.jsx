@@ -42,7 +42,7 @@ const Detail = ({ userId }) => {
         {detailList?.map(({ label, value }, index) => {
           if (index === 2 || index === 6 || index === 7) {
             const date = dateHandle(value);
-
+            console.log(value);
             return (
               <Descriptions.Item label={label} key={label}>
                 <S.DetailSpan>{date}</S.DetailSpan>
